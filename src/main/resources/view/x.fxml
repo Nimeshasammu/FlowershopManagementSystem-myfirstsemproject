@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="700.0" prefWidth="1209.0" style="-fx-background-color: #E9F1F6; -fx-background-radius: 10; -fx-border-color: purple; -fx-border-width: 3px; -fx-border-radius: 10;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.flowershop.controller.DashboardPageController">
+    <children>
+        <ImageView fitHeight="550.0" fitWidth="1060.0" layoutX="10.0" layoutY="10.0" opacity="0.2" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <image>
+                <Image url="@../images/main-blog-1.jpg" />
+            </image>
+        </ImageView>
+        <ImageView fitHeight="550.0" fitWidth="1060.0" opacity="0.2" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <image>
+                <Image url="@../images/main-blog-1.jpg" />
+            </image>
+        </ImageView>
+        <VBox prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="0.0" />
+      <PasswordField fx:id="pwdFieldVerify" layoutX="422.0" layoutY="304.0" onAction="#superAdVerifyOnAction" prefHeight="25.0" prefWidth="249.0" promptText="ENTER YOUR PASSWORD" style="-fx-background-color: E9F1F6; -fx-border-color: #2196f3; -fx-border-radius: 5;">
+         <font>
+            <Font name="Corbel" size="11.0" />
+         </font>
+      </PasswordField>
+      <Label layoutX="342.0" layoutY="204.0" text="To verify as the Super Admin, access the designated platform, authenticate" />
+      <Label layoutX="359.0" layoutY="226.0" text="using secure credentials, navigate to administrative settings, and confirm ">
+         <font>
+            <Font name="Corbel" size="12.0" />
+         </font>
+      </Label>
+      <Label layoutX="339.0" layoutY="244.0" text="exclusive privileges through a unique identifier or multifactor authentication" />
+      <Label layoutX="477.0" layoutY="262.0" text="for heightened security." />
+      <Label layoutX="356.0" layoutY="122.0" text="Verify ur the Super Admin" textFill="#023c73">
+         <font>
+            <Font name="Corbel Bold" size="35.0" />
+         </font>
+      </Label>
+      <ImageView fitHeight="227.0" fitWidth="615.0" layoutX="262.0" layoutY="410.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/verifyAdmin.png" />
+         </image>
+      </ImageView>
+    </children>
+</AnchorPane>

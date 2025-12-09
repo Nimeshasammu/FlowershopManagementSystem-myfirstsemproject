@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="900.0" prefWidth="1440.0" style="-fx-background-color: #ffd3ef;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.flowershop.controller.UserViewController">
+    <children>
+        <AnchorPane layoutX="182.0" layoutY="82.0" prefHeight="80.0" prefWidth="600.0" style="-fx-background-color: #ffd3ef;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+        <AnchorPane prefHeight="80.0" prefWidth="530.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <children>
+                <HBox alignment="CENTER_LEFT" prefHeight="80.0" prefWidth="455.0" spacing="5.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                    <children>
+                        <ImageView fitHeight="65.0" fitWidth="71.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@../images/cover-blog-1.jpg" />
+                            </image>
+                            <HBox.margin>
+                                <Insets left="15.0" />
+                            </HBox.margin>
+                        </ImageView>
+                        <Label text="Blooms Flower Shop" textFill="#800080">
+                            <font>
+                                <Font name="System Bold" size="40.0" />
+                            </font>
+                            <effect>
+                                <DropShadow color="#00b4d8" spread="0.2" />
+                            </effect>
+                        </Label>
+                    </children>
+                </HBox>
+            </children>
+        </AnchorPane>
+        <AnchorPane prefHeight="80.0" prefWidth="200.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="0.0">
+            <children>
+                <VBox alignment="CENTER" fillWidth="false" layoutX="60.0" layoutY="-30.0" prefHeight="100.0" prefWidth="136.0" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                    <children>
+                        <Label fx:id="lblDate" text="07/Feb/2025" textFill="PURPLE">
+                            <font>
+                                <Font name="System Bold" size="18.0" />
+                            </font>
+                        </Label>
+                        <Label fx:id="lblTime" alignment="CENTER_RIGHT" prefHeight="21.0" prefWidth="109.0" text="12:11:15 PM" textFill="PURPLE">
+                            <font>
+                                <Font size="15.0" />
+                            </font>
+                        </Label>
+                    </children>
+                </VBox>
+            </children>
+        </AnchorPane>
+        <AnchorPane layoutX="10.0" layoutY="90.0" prefHeight="700.0" prefWidth="200.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="90.0">
+            <children>
+                <Pane layoutX="5.0" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #ffd3ef; -fx-background-radius: 10; -fx-border-color: purple; -fx-border-radius: 10; -fx-border-width: 2px;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                    <children>
+                        <Button fx:id="btnDashboard" layoutX="10.0" layoutY="30.0" onAction="#onDashboard" prefHeight="25.0" prefWidth="180.0" style="-fx-background-color: purple; -fx-border-radius: 10; -fx-background-radius: 10;" text="         DASHBOARD" textFill="WHITE">
+                            <font>
+                                <Font name="System Bold" size="14.0" />
+                            </font>
+                        </Button>
+                        <Button fx:id="btnRegister" layoutX="10.0" layoutY="70.0" onAction="#onRegistration" prefHeight="25.0" prefWidth="180.0" style="-fx-background-color: #ffd3ef; -fx-border-color: purple; -fx-border-radius: 10; -fx-background-radius: 10;" text="   REGISTER" textFill="PURPLE">
+                            <font>
+                                <Font name="System Bold" size="14.0" />
+                            </font>
+                        </Button>
+                        <Button fx:id="btnStudent" layoutX="10.0" layoutY="110.0" onAction="#onStudent" prefHeight="25.0" prefWidth="180.0" style="-fx-background-color: #ffd3ef; -fx-border-color: purple; -fx-border-radius: 10px;" text="      STUDENTS" textFill="PURPLE">
+                            <font>
+                                <Font name="System Bold" size="14.0" />
+                            </font>
+                        </Button>
+                        <Button fx:id="btnCourse" layoutX="10.0" layoutY="270.0" onAction="#onCourse" prefHeight="25.0" prefWidth="180.0" style="-fx-background-color: #ffd3ef; -fx-border-color: purple; -fx-border-radius: 10px; -fx-background-radius: 10;" text="   COURSE" textFill="PURPLE">
+                            <font>
+                                <Font name="System Bold" size="14.0" />
+                            </font>
+                        </Button>
+                        <Button fx:id="btnBooking" layoutX="10.0" layoutY="150.0" onAction="#onBooking" prefHeight="25.0" prefWidth="180.0" style="-fx-background-color: #ffd3ef; -fx-border-color: purple; -fx-border-radius: 10px; -fx-background-radius: 10;" text="      BOOKING" textFill="PURPLE">
+                            <font>
+                                <Font name="System Bold" size="14.0" />
+                            </font>
+                        </Button>
+                        <Button fx:id="btnInstructor" layoutX="10.0" layoutY="230.0" onAction="#onInstructor" prefHeight="25.0" prefWidth="180.0" style="-fx-background-color: #ffd3ef; -fx-border-color: purple; -fx-border-radius: 10px; -fx-background-radius: 10;" text="            INSTRUCTOR" textFill="PURPLE">
+                            <font>
+                                <Font name="System Bold" size="14.0" />
+                            </font>
+                        </Button>
+                        <Button fx:id="btnAdminManage" layoutX="10.0" layoutY="320.0" onAction="#onAdminManage" prefHeight="25.0" prefWidth="180.0" style="-fx-background-color: #ffd3ef; -fx-border-color: purple; -fx-border-radius: 10px; -fx-background-radius: 10;" text="              ADMIN MNGE" textFill="PURPLE">
+                            <font>
+                                <Font name="System Bold" size="14.0" />
+                            </font>
+                        </Button>
+                        <Pane layoutX="3.0" layoutY="310.0" opacity="0.19" prefHeight="3.0" prefWidth="195.0" style="-fx-background-color: f5f1f8;" />
+                        <Button fx:id="btnLogout" layoutX="10.0" layoutY="420.0" onAction="#onLogout" prefHeight="25.0" prefWidth="180.0" style="-fx-background-color: #ffd3ef; -fx-border-color: purple; -fx-border-radius: 10px; -fx-background-radius: 10;" text="Logout" textFill="PURPLE">
+                            <font>
+                                <Font name="System Bold" size="14.0" />
+                            </font>
+                        </Button>
+                        <ImageView fx:id="pngDashboard" fitHeight="20.0" fitWidth="20.0" layoutX="38.0" layoutY="36.0" preserveRatio="true">
+                            <image>
+                                <Image url="@../images/dashboard.png" />
+                            </image>
+                        </ImageView>
+                        <ImageView fx:id="pngRegister" fitHeight="25.0" fitWidth="22.0" layoutX="38.0" layoutY="76.0" preserveRatio="true">
+                            <image>
+                                <Image url="@../images/registration.png" />
+                            </image>
+                        </ImageView>
+                        <ImageView fx:id="pngStudent" fitHeight="20.0" fitWidth="20.0" layoutX="38.0" layoutY="116.0" preserveRatio="true">
+                            <image>
+                                <Image url="@../images/students.png" />
+                            </image>
+                        </ImageView>
+                        <ImageView fx:id="pngCourse" fitHeight="20.0" fitWidth="20.0" layoutX="38.0" layoutY="276.0" preserveRatio="true">
+                            <image>
+                                <Image url="@../images/course.png" />
+                            </image>
+                        </ImageView>
+                        <ImageView fx:id="pngBooking" fitHeight="20.0" fitWidth="20.0" layoutX="38.0" layoutY="156.0" preserveRatio="true">
+                            <image>
+                                <Image url="@../images/booking.png" />
+                            </image>
+                        </ImageView>
+                        <ImageView fx:id="pngInstructor" fitHeight="20.0" fitWidth="20.0" layoutX="38.0" layoutY="236.0" preserveRatio="true">
+                            <image>
+                                <Image url="@../images/report.png" />
+                            </image>
+                        </ImageView>
+                        <ImageView fx:id="pngAdminManage" fitHeight="20.0" fitWidth="20.0" layoutX="38.0" layoutY="326.0" preserveRatio="true">
+                            <image>
+                                <Image url="@../images/admin.png" />
+                            </image>
+                        </ImageView>
+                        <ImageView fx:id="pngLogout" fitHeight="20.0" fitWidth="20.0" layoutX="38.0" layoutY="426.0" preserveRatio="true">
+                            <image>
+                                <Image url="@../images/logout.png" />
+                            </image>
+                        </ImageView>
+                        <Button fx:id="btnPayment" layoutX="10.0" layoutY="190.0" onAction="#onPayment" prefHeight="25.0" prefWidth="180.0" style="-fx-background-color: #ffd3ef; -fx-border-color: purple; -fx-border-radius: 10px; -fx-background-radius: 10;" text="      PAYMENT" textFill="PURPLE">
+                            <font>
+                                <Font name="System Bold" size="14.0" />
+                            </font>
+                        </Button>
+                        <ImageView fx:id="pngPayment" fitHeight="20.0" fitWidth="20.0" layoutX="38.0" layoutY="196.0" preserveRatio="true">
+                            <image>
+                                <Image url="@../images/payment.png" />
+                            </image>
+                        </ImageView>
+                    </children>
+                </Pane>
+            </children>
+        </AnchorPane>
+        <AnchorPane fx:id="ancMainContainer" layoutX="213.0" layoutY="90.0" prefHeight="700.0" prefWidth="1140.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="215.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="90.0" />
+    </children>
+</AnchorPane>
