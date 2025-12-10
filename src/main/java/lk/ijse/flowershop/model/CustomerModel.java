@@ -1,23 +1,42 @@
 package lk.ijse.flowershop.model;
 
 import lk.ijse.flowershop.dto.CustomerDto;
+import lk.ijse.flowershop.util.CrudUtil;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 public class CustomerModel {
-    public boolean customerSave(CustomerDto customerDto) {
-
+    public boolean customerSave(CustomerDto customerDto) throws SQLException, ClassNotFoundException {
+        String sql = "INSERT INTO customer(cus_id,cus_name,email,contact_num,address,register_date) VALUES (?,?,?,?,?,?)";
+        return CrudUtil.execute(sql, customerDto.getCus_id(), customerDto.getCus_name(), customerDto.getEmail(), customerDto.getContact_num(), customerDto.getAddress(), customerDto.getRegister_date());
     }
 
 
-    public boolean customerUpdate(CustomerDto customerDto) {
-
+    public boolean customerUpdate(CustomerDto customerDto) throws SQLException, ClassNotFoundException {
+        String sql = "UPDATE customer SET cus_name=?,email=?,contact_num=?,address=?,register_date=? WHERE cus_id=?";
+        return CrudUtil.execute(sql, customerDto.getCus_name(), customerDto.getEmail(), customerDto.getContact_num(), customerDto.getAddress(), customerDto.getRegister_date(), customerDto.getCus_id());
     }
 
-    public boolean customerDelete(CustomerID customerID){
-
+    public boolean customerDelete(CustomerDto customerDto) throws SQLException, ClassNotFoundException {
+        String sql = "DELETE FROM customer WHERE cus_id=?";
+        return CrudUtil.execute(sql, customerDto.getCus_id());
     }
-    public ArrayList<CustomerDto>getAllCustomer(){
 
+    public List<CustomerDto> getAllCustomers() throws SQLException, ClassNotFoundException {
+        ResultSet resultSet = CrudUtil.execute("SELECT * FROM customer");
+        List<CustomerDto> customerDtoList = new ArrayList<>();
+        while (resultSet.next()) {
+            customerDtoList.add(new CustomerDto( resultSet.getInt("cus_id"),
+                    resultSet.getString("cus_name"),
+                    resultSet.getString("email"),
+                    resultSet.getString("contact_num"),
+                    resultSet.getString("address"),
+                    resultSet.getString("register_date")));
+        }
+        return customerDtoList;
     }
+
 }
