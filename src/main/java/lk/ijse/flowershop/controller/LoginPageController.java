@@ -68,6 +68,7 @@ public class LoginPageController implements Initializable {
 
     @FXML
     void onForgotPasswordAction(ActionEvent event) {
+        navigateTo("/view/ForgetPassword.fxml");
 
     }
 

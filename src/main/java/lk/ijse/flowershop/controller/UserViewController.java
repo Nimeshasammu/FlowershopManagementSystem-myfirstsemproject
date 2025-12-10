@@ -151,7 +151,9 @@ public class UserViewController implements Initializable {
 
     @FXML
     void onPayment(ActionEvent event) {
-
+        resetOtherPages();
+//        changePage1(btnDashboard, "/images/dashboard.png", pngDashboard);
+        navigateTo("/view/CustomerPage.fxml");
     }
 
     @FXML
