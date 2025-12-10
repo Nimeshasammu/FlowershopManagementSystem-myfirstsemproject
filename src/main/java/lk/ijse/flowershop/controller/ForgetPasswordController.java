@@ -3,11 +3,8 @@ package lk.ijse.flowershop.controller;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Hyperlink;
-import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 
@@ -20,27 +17,16 @@ public class ForgetPasswordController {
     private Hyperlink lblError;
 
     @FXML
-    private HBox lblPassword;
-
-    @FXML
     private HBox lblUsername;
 
     @FXML
-    private PasswordField passwordField;
+    private HBox lblUsername1;
 
     @FXML
-    private ImageView showPassword;
+    private TextField txtEmail;
 
     @FXML
     private TextField txtUserName;
-
-    @FXML
-    private TextField txtVisiblePassword;
-
-    @FXML
-    void PasswordVisibility(MouseEvent event) {
-
-    }
 
     @FXML
     void onForgotPasswordAction(ActionEvent event) {
@@ -49,11 +35,6 @@ public class ForgetPasswordController {
 
     @FXML
     void onKeyPassword(KeyEvent event) {
-
-    }
-
-    @FXML
-    void onKeySingin(KeyEvent event) {
 
     }
 

@@ -10,7 +10,7 @@ import java.util.ArrayList;
 
 public class UserModel {
     public static UserDto searchUser(String userName, String password) {
-        String sql = "SELECT * FROM User WHERE userName = ? AND password = ?";
+        String sql = "SELECT * FROM User WHERE user_name = ? AND password = ?";
 
         try {
             Connection connection = DBConnection.getInstance().getConnection();
@@ -22,7 +22,7 @@ public class UserModel {
 
             if (resultSet.next()) {
                 return new UserDto(
-                        resultSet.getString("userName"),
+                        resultSet.getString("user_name"),
                         resultSet.getString("password"),
                         resultSet.getString("email"),
                         resultSet.getString("role")
