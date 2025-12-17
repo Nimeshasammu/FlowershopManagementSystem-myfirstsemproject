@@ -101,7 +101,9 @@ public class UserViewController implements Initializable {
 
     @FXML
     void onCourse(ActionEvent event) {
-
+        resetOtherPages();
+//        changePage1(btnDashboard, "/images/dashboard.png", pngDashboard);
+        navigateTo("/view/SupplierPage.fxml");
     }
 
     @FXML
@@ -113,7 +115,9 @@ public class UserViewController implements Initializable {
 
     @FXML
     void onInstructor(ActionEvent event) {
-
+        resetOtherPages();
+//        changePage1(btnDashboard, "/images/dashboard.png", pngDashboard);
+        navigateTo("/view/EmployeePage.fxml");
     }
 
     @FXML
@@ -159,13 +163,15 @@ public class UserViewController implements Initializable {
     @FXML
     void onRegistration(ActionEvent event) {
         resetOtherPages();
-        changePage1(btnDashboard, "/images/dashboard.png", pngDashboard);
-        navigateTo("/view/DashboardPage.fxml");
+//        changePage1(btnAdminManage, "/images/admin.png", pngAdminManage);
+        navigateTo("/view/ProductPage.fxml");
     }
 
     @FXML
     void onStudent(ActionEvent event) {
-
+        resetOtherPages();
+//        changePage1(btnAdminManage, "/images/admin.png", pngAdminManage);
+        navigateTo("/view/OrderPage.fxml");
     }
 
     public void navigateTo(String path) {
@@ -231,7 +237,10 @@ public class UserViewController implements Initializable {
         switch (role) {
             case "Admin":
                 break;
-            case "RECEPTIONIST":
+            case "Manager":
+                btnAdminManage.setDisable(true);
+                break;
+            case "Receptionist":
                 btnBooking.setDisable(true);
                 btnPayment.setDisable(true);
                 btnCourse.setDisable(true);

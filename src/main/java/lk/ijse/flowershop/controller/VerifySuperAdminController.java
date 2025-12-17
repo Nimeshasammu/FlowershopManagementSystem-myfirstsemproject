@@ -15,20 +15,28 @@ public class VerifySuperAdminController {
     private PasswordField pwdFieldVerify;
 
     @FXML
-    private AnchorPane subAnchorPane;
+    private AnchorPane AdminManageAnchorPane;
 
     public void navigateTo(String path) {
         try {
-            subAnchorPane.getChildren().clear();
-            AnchorPane anchorPane = FXMLLoader.load(getClass().getResource(path));
-            anchorPane.prefWidthProperty().bind(subAnchorPane.widthProperty());
-            anchorPane.prefHeightProperty().bind(subAnchorPane.heightProperty());
-            subAnchorPane.getChildren().add(anchorPane);
+            AdminManageAnchorPane.getChildren().clear();
+
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(path));
+            AnchorPane anchorPane = loader.load();
+
+            AnchorPane.setTopAnchor(anchorPane, 0.0);
+            AnchorPane.setBottomAnchor(anchorPane, 0.0);
+            AnchorPane.setLeftAnchor(anchorPane, 0.0);
+            AnchorPane.setRightAnchor(anchorPane, 0.0);
+
+            AdminManageAnchorPane.getChildren().add(anchorPane);
+
         } catch (Exception e) {
-            showAlert(Alert.AlertType.ERROR, "Page not found");
+            new Alert(Alert.AlertType.ERROR, "Page not found", ButtonType.OK).show();
             e.printStackTrace();
         }
     }
+
 
     @FXML
     void superAdVerifyOnAction(ActionEvent actionEvent) {

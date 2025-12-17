@@ -9,42 +9,36 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
-import lk.ijse.flowershop.dto.CustomerDto;
-import lk.ijse.flowershop.model.CustomerModel;
+import lk.ijse.flowershop.dto.SupplierDto;
+import lk.ijse.flowershop.model.SupplierModel;
 
 import java.sql.SQLException;
 
-public class CustomerPageController {
+public class SupplierPageController {
 
     @FXML
-    private TableColumn<CustomerDto, String> colAddress;
+    private TableColumn<SupplierDto, String> colAddress;
 
     @FXML
-    private TableColumn<CustomerDto, String> colContact;
+    private TableColumn<SupplierDto, String> colContact;
 
     @FXML
-    private TableColumn<CustomerDto, String> colEmail;
+    private TableColumn<SupplierDto, String> colEmail;
 
     @FXML
-    private TableColumn<CustomerDto, Integer> colId;
+    private TableColumn<SupplierDto, Integer> colId;
 
     @FXML
-    private TableColumn<CustomerDto, String> colJoinDate;
+    private TableColumn<SupplierDto, String> colName;
 
     @FXML
-    private TableColumn<CustomerDto, String> colName;
-
-    @FXML
-    private TableView<CustomerDto> tblCustomer;
+    private TableView<SupplierDto> tblSupplier;
 
     @FXML
     private TextField textAddress;
 
     @FXML
     private TextField textContact;
-
-    @FXML
-    private TextField textDate;
 
     @FXML
     private TextField textEmail;
@@ -55,66 +49,62 @@ public class CustomerPageController {
     @FXML
     private TextField textName;
 
-    private final CustomerModel customerModel = new CustomerModel();
+    private final SupplierModel supplierModel = new SupplierModel();
 
     @FXML
     public void initialize() {
         setCellValueFactory();
-        loadAllCustomers();
+        loadAllSuppliers();
         tableSelectListener();
     }
 
     private void setCellValueFactory() {
-        colId.setCellValueFactory(new PropertyValueFactory<>("cus_id"));
-        colName.setCellValueFactory(new PropertyValueFactory<>("cus_name"));
+        colId.setCellValueFactory(new PropertyValueFactory<>("supplier_id"));
+        colName.setCellValueFactory(new PropertyValueFactory<>("name"));
         colEmail.setCellValueFactory(new PropertyValueFactory<>("email"));
         colContact.setCellValueFactory(new PropertyValueFactory<>("contact_num"));
         colAddress.setCellValueFactory(new PropertyValueFactory<>("address"));
-        colJoinDate.setCellValueFactory(new PropertyValueFactory<>("register_date"));
     }
 
-    private void loadAllCustomers() {
-        ObservableList<CustomerDto> list = FXCollections.observableArrayList();
+    private void loadAllSuppliers() {
+        ObservableList<SupplierDto> list = FXCollections.observableArrayList();
         try {
-            list.addAll(customerModel.getAllCustomers());
+            list.addAll(supplierModel.getAllSuppliers());
         } catch (SQLException | ClassNotFoundException e) {
             new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
         }
-        tblCustomer.setItems(list);
+        tblSupplier.setItems(list);
     }
 
     private void tableSelectListener() {
-        tblCustomer.getSelectionModel().selectedItemProperty().addListener((obs, oldVal, newVal) -> {
+        tblSupplier.getSelectionModel().selectedItemProperty().addListener((obs, oldVal, newVal) -> {
             if (newVal != null) {
-                textId.setText(String.valueOf(newVal.getCus_id()));
-                textName.setText(newVal.getCus_name());
+                textId.setText(String.valueOf(newVal.getSupplier_id()));
+                textName.setText(newVal.getName());
                 textEmail.setText(newVal.getEmail());
                 textContact.setText(newVal.getContact_num());
                 textAddress.setText(newVal.getAddress());
-                textDate.setText(newVal.getRegister_date());
             }
         });
     }
 
-
     @FXML
     void onActionSave(ActionEvent event) {
         try {
-            CustomerDto dto = new CustomerDto(
+            SupplierDto dto = new SupplierDto(
                     Integer.parseInt(textId.getText()),
                     textName.getText(),
                     textEmail.getText(),
                     textContact.getText(),
-                    textAddress.getText(),
-                    textDate.getText()
+                    textAddress.getText()
             );
 
-            boolean isSaved = customerModel.customerSave(dto);
+            boolean isSaved = supplierModel.supplierSave(dto);
 
             if (isSaved) {
-                new Alert(Alert.AlertType.INFORMATION, "Customer Saved Successfully!").show();
+                new Alert(Alert.AlertType.INFORMATION, "Supplier Saved Successfully!").show();
                 clearFields();
-                loadAllCustomers();
+                loadAllSuppliers();
             } else {
                 new Alert(Alert.AlertType.ERROR, "Save Failed").show();
             }
@@ -126,21 +116,20 @@ public class CustomerPageController {
     @FXML
     void onActionUpdate(ActionEvent event) {
         try {
-            CustomerDto dto = new CustomerDto(
+            SupplierDto dto = new SupplierDto(
                     Integer.parseInt(textId.getText()),
                     textName.getText(),
                     textEmail.getText(),
                     textContact.getText(),
-                    textAddress.getText(),
-                    textDate.getText()
+                    textAddress.getText()
             );
 
-            boolean isUpdated = customerModel.customerUpdate(dto);
+            boolean isUpdated = supplierModel.supplierUpdate(dto);
 
             if (isUpdated) {
-                new Alert(Alert.AlertType.INFORMATION, "Customer Updated Successfully!").show();
+                new Alert(Alert.AlertType.INFORMATION, "Supplier Updated Successfully!").show();
                 clearFields();
-                loadAllCustomers();
+                loadAllSuppliers();
             } else {
                 new Alert(Alert.AlertType.ERROR, "Update Failed").show();
             }
@@ -152,15 +141,15 @@ public class CustomerPageController {
     @FXML
     void onActionDelete(ActionEvent event) {
         try {
-            CustomerDto dto = new CustomerDto();
-            dto.setCus_id(Integer.parseInt(textId.getText()));
+            SupplierDto dto = new SupplierDto();
+            dto.setSupplier_id(Integer.parseInt(textId.getText()));
 
-            boolean isDeleted = customerModel.customerDelete(dto);
+            boolean isDeleted = supplierModel.supplierDelete(dto);
 
             if (isDeleted) {
-                new Alert(Alert.AlertType.INFORMATION, "Customer Deleted Successfully!").show();
+                new Alert(Alert.AlertType.INFORMATION, "Supplier Deleted Successfully!").show();
                 clearFields();
-                loadAllCustomers();
+                loadAllSuppliers();
             } else {
                 new Alert(Alert.AlertType.ERROR, "Delete Failed").show();
             }
@@ -180,7 +169,6 @@ public class CustomerPageController {
         textEmail.clear();
         textContact.clear();
         textAddress.clear();
-        textDate.clear();
-        tblCustomer.getSelectionModel().clearSelection();
+        tblSupplier.getSelectionModel().clearSelection();
     }
 }
