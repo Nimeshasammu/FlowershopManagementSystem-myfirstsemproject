@@ -2,10 +2,12 @@ package lk.ijse.flowershop.model;
 
 import lk.ijse.flowershop.db.DBConnection;
 import lk.ijse.flowershop.dto.UserDto;
+import lk.ijse.flowershop.util.CrudUtil;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class UserModel {
@@ -31,6 +33,79 @@ public class UserModel {
 
         } catch (Exception e) {
             e.printStackTrace();
+        }
+        return null;
+    }
+    public boolean userSave(UserDto userDto) throws SQLException, ClassNotFoundException {
+
+        String sql = "INSERT INTO User(user_name, password, email, role, emp_id) VALUES (?,?,?,?,?)";
+
+        return CrudUtil.execute(
+                sql,
+                userDto.getUser_name(),
+                userDto.getPassword(),
+                userDto.getEmail(),
+                userDto.getRole(),
+                userDto.getEmp_id()
+        );
+    }
+
+    public boolean userUpdate(UserDto userDto) throws SQLException, ClassNotFoundException {
+
+        String sql = "UPDATE User SET user_name=?, password=?, email=?, role=?, emp_id=? WHERE user_id=?";
+
+        return CrudUtil.execute(
+                sql,
+                userDto.getUser_name(),
+                userDto.getPassword(),
+                userDto.getEmail(),
+                userDto.getRole(),
+                userDto.getEmp_id(),
+                userDto.getUser_id()
+        );
+    }
+
+    public boolean userDelete(int userId) throws SQLException, ClassNotFoundException {
+
+        String sql = "DELETE FROM User WHERE user_id=?";
+
+        return CrudUtil.execute(sql, userId);
+    }
+
+    public ArrayList<UserDto> getAllUsers() throws SQLException, ClassNotFoundException {
+
+        String sql = "SELECT * FROM User";
+        ResultSet rs = CrudUtil.execute(sql);
+
+        ArrayList<UserDto> list = new ArrayList<>();
+
+        while (rs.next()) {
+            list.add(new UserDto(
+                    rs.getInt("user_id"),
+                    rs.getString("user_name"),
+                    rs.getString("password"),
+                    rs.getString("email"),
+                    rs.getString("role"),
+                    rs.getInt("emp_id")
+            ));
+        }
+        return list;
+    }
+
+    public UserDto findByUsername(String username) throws SQLException, ClassNotFoundException {
+
+        String sql = "SELECT * FROM User WHERE user_name=?";
+        ResultSet rs = CrudUtil.execute(sql, username);
+
+        if (rs.next()) {
+            return new UserDto(
+                    rs.getInt("user_id"),
+                    rs.getString("user_name"),
+                    rs.getString("password"),
+                    rs.getString("email"),
+                    rs.getString("role"),
+                    rs.getInt("emp_id")
+            );
         }
         return null;
     }

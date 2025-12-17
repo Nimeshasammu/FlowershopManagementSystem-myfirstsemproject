@@ -11,7 +11,7 @@ public class EmployeeModel {
 
     public boolean employeeSave(EmployeeDto employeeDto) throws SQLException, ClassNotFoundException {
 
-        String sql = "INSERT INTO employee(name, nic, job_role, email, contact_num, address) VALUES (?,?,?,?,?,?)";
+        String sql = "INSERT INTO Employee(name, nic, job_role, email, contact_num, address) VALUES (?,?,?,?,?,?)";
 
         return CrudUtil.execute(
                 sql,
@@ -26,7 +26,7 @@ public class EmployeeModel {
 
     public boolean employeeUpdate(EmployeeDto employeeDto) throws SQLException, ClassNotFoundException {
 
-        String sql = "UPDATE employee SET name=?, nic=?, job_role=?, email=?, contact_num=?, address=? WHERE emp_id=?";
+        String sql = "UPDATE Employee SET name=?, nic=?, job_role=?, email=?, contact_num=?, address=? WHERE emp_id=?";
 
         return CrudUtil.execute(
                 sql,
@@ -42,14 +42,14 @@ public class EmployeeModel {
 
     public boolean employeeDelete(int empId) throws SQLException, ClassNotFoundException {
 
-        String sql = "DELETE FROM employee WHERE emp_id=?";
+        String sql = "DELETE FROM Employee WHERE emp_id=?";
 
         return CrudUtil.execute(sql, empId);
     }
 
     public ArrayList<EmployeeDto> getAllEmployee() throws SQLException, ClassNotFoundException {
 
-        String sql = "SELECT * FROM employee";
+        String sql = "SELECT * FROM Employee";
 
         ResultSet rs = CrudUtil.execute(sql);
         ArrayList<EmployeeDto> list = new ArrayList<>();
