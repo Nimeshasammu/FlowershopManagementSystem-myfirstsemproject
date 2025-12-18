@@ -95,10 +95,40 @@ public class AdminManagePageController {
             }
         });
     }
+    private boolean validateInputs() {
+        if (textEmail.getText().isEmpty() ) {
+            showErrorMessage("All fields must be filled!");
+            return false;
+        }
+
+        if (!isValidEmail(textEmail.getText())) {
+            showErrorMessage("Invalid email format!");
+            return false;
+        }
+
+        return true;
+    }
+
+    private boolean isValidEmail(String email) {
+        String emailRegex = "^[\\w.-]+@[\\w.-]+\\.[a-zA-Z]{2,}$";
+        return email.matches(emailRegex);
+    }
+    private void showErrorMessage(String message) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Validation Error");
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
+
+
 
 
     @FXML
     void onActionSave(ActionEvent event) {
+        if (!validateInputs()) {
+            return;
+        }
         try {
             UserDto dto = new UserDto(
                     0, // auto increment
@@ -126,6 +156,9 @@ public class AdminManagePageController {
 
     @FXML
     void onActionUpdate(ActionEvent event) {
+        if (!validateInputs()) {
+            return;
+        }
         try {
             UserDto dto = new UserDto(
                     Integer.parseInt(textId.getText()),

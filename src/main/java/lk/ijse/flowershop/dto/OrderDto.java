@@ -2,6 +2,8 @@ package lk.ijse.flowershop.dto;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
+
 import lombok.*;
 
 @AllArgsConstructor
@@ -9,11 +11,13 @@ import lombok.*;
 @Getter
 @Setter
 @ToString
-public class OrdersDto {
+public class OrderDto {
     private int order_id;
     private LocalDate order_date;
     private LocalTime time;
     private double total_amount;
     private int cus_id;
     private  int user_id;
+    private ArrayList<OrderDetailsDto> cartList;
+
 }

@@ -75,6 +75,40 @@ public class SupplierPageController {
         }
         tblSupplier.setItems(list);
     }
+    private boolean validateInputs() {
+        if (textName.getText().isEmpty() || textContact.getText().isEmpty() ||
+                textEmail.getText().isEmpty() || textAddress.getText().isEmpty()) {
+            showErrorMessage("All fields must be filled!");
+            return false;
+        }
+
+        if (!isValidEmail(textEmail.getText())) {
+            showErrorMessage("Invalid email format!");
+            return false;
+        }
+        if (!isValidContact(textContact.getText())) {
+            showErrorMessage("Contact number must be 10 digits!");
+            return false;
+        }
+
+        return true;
+    }
+
+    private boolean isValidEmail(String email) {
+        String emailRegex = "^[\\w.-]+@[\\w.-]+\\.[a-zA-Z]{2,}$";
+        return email.matches(emailRegex);
+    }
+
+    private boolean isValidContact(String contact) {
+        return contact != null && contact.matches("^\\d{10}$");
+    }
+    private void showErrorMessage(String message) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Validation Error");
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
 
     private void tableSelectListener() {
         tblSupplier.getSelectionModel().selectedItemProperty().addListener((obs, oldVal, newVal) -> {
@@ -90,6 +124,9 @@ public class SupplierPageController {
 
     @FXML
     void onActionSave(ActionEvent event) {
+        if (!validateInputs()) {
+            return;
+        }
         try {
             SupplierDto dto = new SupplierDto(
                     Integer.parseInt(textId.getText()),
@@ -115,6 +152,9 @@ public class SupplierPageController {
 
     @FXML
     void onActionUpdate(ActionEvent event) {
+        if (!validateInputs()) {
+            return;
+        }
         try {
             SupplierDto dto = new SupplierDto(
                     Integer.parseInt(textId.getText()),

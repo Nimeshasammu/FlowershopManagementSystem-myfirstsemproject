@@ -53,4 +53,9 @@ public class ItemModel {
         }
         return itemList;
     }
+
+    public boolean stockUpdate(int itemId, int quantity) throws SQLException, ClassNotFoundException {
+        String sql = "UPDATE Item SET quantity = quantity - ? WHERE item_id = ?";
+        return CrudUtil.execute(sql,quantity, itemId);
+    }
 }

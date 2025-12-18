@@ -6,10 +6,11 @@ import lombok.*;
 @Getter
 @Setter
 @ToString
-public class OrderItemDto {
+public class OrderDetailsDto {
     private int order_id;
     private int item_id;
     private int quantity;
     private  int payment_id;
+
 
 }

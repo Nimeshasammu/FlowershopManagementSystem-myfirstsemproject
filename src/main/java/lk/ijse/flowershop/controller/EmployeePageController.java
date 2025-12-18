@@ -75,6 +75,46 @@ public class EmployeePageController implements Initializable {
         colContact.setCellValueFactory(new PropertyValueFactory<>("contact_num"));
         colAddress.setCellValueFactory(new PropertyValueFactory<>("address"));
     }
+    private boolean validateInputs() {
+        if (textName.getText().isEmpty() || textContact.getText().isEmpty() ||
+                textEmail.getText().isEmpty() || textAddress.getText().isEmpty()) {
+            showErrorMessage("All fields must be filled!");
+            return false;
+        }
+
+        if (!isValidEmail(textEmail.getText())) {
+            showErrorMessage("Invalid email format!");
+            return false;
+        }
+        if (!isValidContact(textContact.getText())) {
+            showErrorMessage("Contact number must be 10 digits!");
+            return false;
+        }
+        if (!isValidNIC(textNic.getText())) {
+            showErrorMessage("Invalid NIC format!");
+            return false;
+        }
+
+        return true;
+    }
+    private boolean isValidNIC(String nic) {
+        return nic != null && (nic.matches("^\\d{9}[vVxX]$") || nic.matches("^\\d{12}$"));
+    }
+    private boolean isValidEmail(String email) {
+        String emailRegex = "^[\\w.-]+@[\\w.-]+\\.[a-zA-Z]{2,}$";
+        return email.matches(emailRegex);
+    }
+
+    private boolean isValidContact(String contact) {
+        return contact != null && contact.matches("^\\d{10}$");
+    }
+    private void showErrorMessage(String message) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Validation Error");
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
 
     private void loadAllEmployees() {
         try {
@@ -102,6 +142,9 @@ public class EmployeePageController implements Initializable {
 
     @FXML
     void onActionSave(ActionEvent event) {
+        if (!validateInputs()) {
+            return;
+        }
         try {
             EmployeeDto dto = new EmployeeDto(
                     0,
@@ -126,6 +169,9 @@ public class EmployeePageController implements Initializable {
 
     @FXML
     void onActionUpdate(ActionEvent event) {
+        if (!validateInputs()) {
+            return;
+        }
         try {
             EmployeeDto dto = new EmployeeDto(
                     Integer.parseInt(textId.getText()),

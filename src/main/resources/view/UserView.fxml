@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.effect.DropShadow?>
@@ -10,29 +9,25 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="900.0" prefWidth="1440.0" style="-fx-background-color: #ffd3ef;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.flowershop.controller.UserViewController">
+<AnchorPane prefHeight="900.0" prefWidth="1440.0" style="-fx-background-color: #ffd3ef;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.flowershop.controller.UserViewController">
     <children>
         <AnchorPane layoutX="182.0" layoutY="82.0" prefHeight="80.0" prefWidth="600.0" style="-fx-background-color: #ffd3ef;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
         <AnchorPane prefHeight="80.0" prefWidth="530.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
             <children>
                 <HBox alignment="CENTER_LEFT" prefHeight="80.0" prefWidth="455.0" spacing="5.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                     <children>
-                        <ImageView fitHeight="65.0" fitWidth="71.0" pickOnBounds="true" preserveRatio="true">
-                            <image>
-                                <Image url="@../images/cover-blog-1.jpg" />
-                            </image>
-                            <HBox.margin>
-                                <Insets left="15.0" />
-                            </HBox.margin>
-                        </ImageView>
                         <Label text="Blooms Flower Shop" textFill="#800080">
                             <font>
                                 <Font name="System Bold" size="40.0" />
                             </font>
                             <effect>
-                                <DropShadow color="#00b4d8" spread="0.2" />
+                                <DropShadow spread="0.2">
+                           <color>
+                              <Color red="0.47171974182128906" blue="0.8399999737739563" />
+                           </color></DropShadow>
                             </effect>
                         </Label>
                     </children>
@@ -66,27 +61,27 @@
                                 <Font name="System Bold" size="14.0" />
                             </font>
                         </Button>
-                        <Button fx:id="btnRegister" layoutX="10.0" layoutY="70.0" onAction="#onRegistration" prefHeight="25.0" prefWidth="180.0" style="-fx-background-color: #ffd3ef; -fx-border-color: purple; -fx-border-radius: 10; -fx-background-radius: 10;" text="   REGISTER" textFill="PURPLE">
+                        <Button fx:id="btnRegister" layoutX="10.0" layoutY="70.0" onAction="#onRegistration" prefHeight="25.0" prefWidth="180.0" style="-fx-background-color: #ffd3ef; -fx-border-color: purple; -fx-border-radius: 10; -fx-background-radius: 10;" text="          All FLOWERS" textFill="PURPLE">
                             <font>
                                 <Font name="System Bold" size="14.0" />
                             </font>
                         </Button>
-                        <Button fx:id="btnStudent" layoutX="10.0" layoutY="110.0" onAction="#onStudent" prefHeight="25.0" prefWidth="180.0" style="-fx-background-color: #ffd3ef; -fx-border-color: purple; -fx-border-radius: 10px;" text="      STUDENTS" textFill="PURPLE">
+                        <Button fx:id="btnStudent" layoutX="10.0" layoutY="110.0" onAction="#onStudent" prefHeight="25.0" prefWidth="180.0" style="-fx-background-color: #ffd3ef; -fx-border-color: purple; -fx-border-radius: 10px;" text=" ORDER" textFill="PURPLE">
                             <font>
                                 <Font name="System Bold" size="14.0" />
                             </font>
                         </Button>
-                        <Button fx:id="btnCourse" layoutX="10.0" layoutY="270.0" onAction="#onCourse" prefHeight="25.0" prefWidth="180.0" style="-fx-background-color: #ffd3ef; -fx-border-color: purple; -fx-border-radius: 10px; -fx-background-radius: 10;" text="   COURSE" textFill="PURPLE">
+                        <Button fx:id="btnCourse" layoutX="10.0" layoutY="270.0" onAction="#onCourse" prefHeight="25.0" prefWidth="180.0" style="-fx-background-color: #ffd3ef; -fx-border-color: purple; -fx-border-radius: 10px; -fx-background-radius: 10;" text="      SUPPLIER" textFill="PURPLE">
                             <font>
                                 <Font name="System Bold" size="14.0" />
                             </font>
                         </Button>
-                        <Button fx:id="btnBooking" layoutX="10.0" layoutY="150.0" onAction="#onBooking" prefHeight="25.0" prefWidth="180.0" style="-fx-background-color: #ffd3ef; -fx-border-color: purple; -fx-border-radius: 10px; -fx-background-radius: 10;" text="      BOOKING" textFill="PURPLE">
+                        <Button fx:id="btnBooking" layoutX="10.0" layoutY="150.0" onAction="#onBooking" prefHeight="25.0" prefWidth="180.0" style="-fx-background-color: #ffd3ef; -fx-border-color: purple; -fx-border-radius: 10px; -fx-background-radius: 10;" text="      PAYMENT" textFill="PURPLE">
                             <font>
                                 <Font name="System Bold" size="14.0" />
                             </font>
                         </Button>
-                        <Button fx:id="btnInstructor" layoutX="10.0" layoutY="230.0" onAction="#onInstructor" prefHeight="25.0" prefWidth="180.0" style="-fx-background-color: #ffd3ef; -fx-border-color: purple; -fx-border-radius: 10px; -fx-background-radius: 10;" text="            INSTRUCTOR" textFill="PURPLE">
+                        <Button fx:id="btnInstructor" layoutX="10.0" layoutY="230.0" onAction="#onInstructor" prefHeight="25.0" prefWidth="180.0" style="-fx-background-color: #ffd3ef; -fx-border-color: purple; -fx-border-radius: 10px; -fx-background-radius: 10;" text="       EMPLOYEE" textFill="PURPLE">
                             <font>
                                 <Font name="System Bold" size="14.0" />
                             </font>
@@ -142,7 +137,7 @@
                                 <Image url="@../images/logout.png" />
                             </image>
                         </ImageView>
-                        <Button fx:id="btnPayment" layoutX="10.0" layoutY="190.0" onAction="#onPayment" prefHeight="25.0" prefWidth="180.0" style="-fx-background-color: #ffd3ef; -fx-border-color: purple; -fx-border-radius: 10px; -fx-background-radius: 10;" text="      PAYMENT" textFill="PURPLE">
+                        <Button fx:id="btnPayment" layoutX="10.0" layoutY="190.0" onAction="#onPayment" prefHeight="25.0" prefWidth="180.0" style="-fx-background-color: #ffd3ef; -fx-border-color: purple; -fx-border-radius: 10px; -fx-background-radius: 10;" text="        CUSTOMER" textFill="PURPLE">
                             <font>
                                 <Font name="System Bold" size="14.0" />
                             </font>
