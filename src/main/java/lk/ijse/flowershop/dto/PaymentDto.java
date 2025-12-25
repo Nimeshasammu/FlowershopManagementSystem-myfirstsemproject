@@ -11,10 +11,10 @@ import java.time.LocalDateTime;
 @ToString
 public class PaymentDto {
 
-    private int payment_id;
+    private String payment_id;
     private String payment_method;   // Cash, Card, Online
     private LocalDateTime payment_date;
     private double total_amount;
     private String status;            // Success, Failed, Pending
-    private int order_id;
+    private String order_id;
 }

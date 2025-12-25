@@ -11,8 +11,9 @@ import java.util.List;
 public class ItemModel {
 
     public boolean itemSave(ItemDto itemDto) throws SQLException, ClassNotFoundException {
-        String sql = "INSERT INTO Item(item_name, unit_price, img_src, item_color, quantity) VALUES (?,?,?,?,?)";
+        String sql = "INSERT INTO Item(item_id,item_name, unit_price, img_src, item_color, quantity) VALUES (?,?,?,?,?,?)";
         return CrudUtil.execute(sql,
+                itemDto.getItem_id(),
                 itemDto.getItem_name(),
                 itemDto.getUnit_price(),
                 itemDto.getImg_src(),
@@ -31,7 +32,7 @@ public class ItemModel {
                 itemDto.getItem_id());
     }
 
-    public boolean itemDelete(int itemId) throws SQLException, ClassNotFoundException {
+    public boolean itemDelete(String itemId) throws SQLException, ClassNotFoundException {
         String sql = "DELETE FROM Item WHERE item_id=?";
         return CrudUtil.execute(sql, itemId);
     }
@@ -43,7 +44,7 @@ public class ItemModel {
 
         while (resultSet.next()) {
             itemList.add(new ItemDto(
-                    resultSet.getInt("item_id"),
+                    resultSet.getString("item_id"),
                     resultSet.getString("item_name"),
                     resultSet.getDouble("unit_price"),
                     resultSet.getString("img_src"),
@@ -54,8 +55,15 @@ public class ItemModel {
         return itemList;
     }
 
-    public boolean stockUpdate(int itemId, int quantity) throws SQLException, ClassNotFoundException {
+    public boolean stockUpdate(String itemId, int quantity) throws SQLException, ClassNotFoundException {
         String sql = "UPDATE Item SET quantity = quantity - ? WHERE item_id = ?";
         return CrudUtil.execute(sql,quantity, itemId);
+    }
+    public String getLastItemId() throws SQLException, ClassNotFoundException {
+        ResultSet resultSet = CrudUtil.execute("SELECT MAX(item_id) FROM Item");
+        if (resultSet.next()) {
+            return resultSet.getString(1);
+        }
+        return null;
     }
 }

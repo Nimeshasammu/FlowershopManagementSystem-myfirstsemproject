@@ -38,10 +38,11 @@ public class UserModel {
     }
     public boolean userSave(UserDto userDto) throws SQLException, ClassNotFoundException {
 
-        String sql = "INSERT INTO User(user_name, password, email, role, emp_id) VALUES (?,?,?,?,?)";
+        String sql = "INSERT INTO User(user_id,user_name, password, email, role, emp_id) VALUES (?,?,?,?,?,?)";
 
         return CrudUtil.execute(
                 sql,
+                userDto.getUser_id(),
                 userDto.getUser_name(),
                 userDto.getPassword(),
                 userDto.getEmail(),
@@ -52,10 +53,11 @@ public class UserModel {
 
     public boolean userUpdate(UserDto userDto) throws SQLException, ClassNotFoundException {
 
-        String sql = "UPDATE User SET user_name=?, password=?, email=?, role=?, emp_id=? WHERE user_id=?";
+        String sql = "UPDATE User SET user_id=?, user_name=?, password=?, email=?, role=?, emp_id=? WHERE user_id=?";
 
         return CrudUtil.execute(
                 sql,
+                userDto.getUser_id(),
                 userDto.getUser_name(),
                 userDto.getPassword(),
                 userDto.getEmail(),
@@ -65,7 +67,7 @@ public class UserModel {
         );
     }
 
-    public boolean userDelete(int userId) throws SQLException, ClassNotFoundException {
+    public boolean userDelete(String userId) throws SQLException, ClassNotFoundException {
 
         String sql = "DELETE FROM User WHERE user_id=?";
 
@@ -81,12 +83,12 @@ public class UserModel {
 
         while (rs.next()) {
             list.add(new UserDto(
-                    rs.getInt("user_id"),
+                    rs.getString("user_id"),
                     rs.getString("user_name"),
                     rs.getString("password"),
                     rs.getString("email"),
                     rs.getString("role"),
-                    rs.getInt("emp_id")
+                    rs.getString("emp_id")
             ));
         }
         return list;
@@ -99,14 +101,24 @@ public class UserModel {
 
         if (rs.next()) {
             return new UserDto(
-                    rs.getInt("user_id"),
+                    rs.getString("user_id"),
                     rs.getString("user_name"),
                     rs.getString("password"),
                     rs.getString("email"),
                     rs.getString("role"),
-                    rs.getInt("emp_id")
+                    rs.getString("emp_id")
             );
         }
         return null;
     }
+    public String getLastUserId() throws SQLException, ClassNotFoundException {
+        String sql = "SELECT MAX(user_id) FROM User";
+        ResultSet resultSet = CrudUtil.execute(sql);
+
+        if (resultSet.next()) {
+            return resultSet.getString(1);
+        }
+        return null;
+    }
+
 }

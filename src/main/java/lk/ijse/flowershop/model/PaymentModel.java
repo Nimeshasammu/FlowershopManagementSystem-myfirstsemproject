@@ -50,15 +50,22 @@ public class PaymentModel {
         while (resultSet.next()) {
             paymentDtoList.add(
                     new PaymentDto(
-                            resultSet.getInt("payment_id"),
+                            resultSet.getString("payment_id"),
                             resultSet.getString("payment_method"),
                             resultSet.getTimestamp("payment_date").toLocalDateTime(),
                             resultSet.getDouble("total_amount"),
                             resultSet.getString("status"),
-                            resultSet.getInt("order_id")
+                            resultSet.getString("order_id")
                     )
             );
         }
         return paymentDtoList;
+    }
+    public String getLastPaymentId() throws SQLException, ClassNotFoundException {
+        ResultSet resultSet = CrudUtil.execute("SELECT MAX(payment_id) FROM Payment");
+        if (resultSet.next()) {
+            return resultSet.getString("payment_id");
+        }
+        return null;
     }
 }

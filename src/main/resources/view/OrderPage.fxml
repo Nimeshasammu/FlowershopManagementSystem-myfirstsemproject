@@ -3,6 +3,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.TableColumn?>
@@ -107,7 +108,7 @@
                   <Font name="System Bold" size="13.0" />
                </font>
             </Label>
-            <Button fx:id="btnComfirm" mnemonicParsing="false" onAction="#onActionComfirm" prefWidth="100.0" style="-fx-background-color: #55efc4; -fx-border-color: #00b894; -fx-background-radius: 5; -fx-border-radius: 5; -fx-border-width: 2;" text="COMFIRM">
+            <Button fx:id="btnConfirm" mnemonicParsing="false" onAction="#onActionConfirm" prefWidth="100.0" style="-fx-background-color: #55efc4; -fx-border-color: #00b894; -fx-background-radius: 5; -fx-border-radius: 5; -fx-border-width: 2;" text="COMFIRM">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
@@ -125,19 +126,19 @@
             <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
          </padding>
       </HBox>
-      <VBox prefHeight="200.0" prefWidth="100.0" spacing="20.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="275.0" AnchorPane.topAnchor="40.0">
+      <VBox layoutX="37.6" layoutY="46.400000000000006" prefHeight="430.0" prefWidth="897.0" spacing="20.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="278.0" AnchorPane.topAnchor="43.0">
          <children>
             <Label text="Order Management" textFill="#023c73">
                <font>
                   <Font name="Corbel Bold" size="35.0" />
                </font>
                <VBox.margin>
-                  <Insets bottom="50.0" />
+                  <Insets bottom="50.0" left="10.0" />
                </VBox.margin>
             </Label>
             <HBox prefHeight="25.0" prefWidth="1153.0">
                <children>
-                  <Label text="Customer Id" textAlignment="CENTER">
+                  <Label text="Customer Details" textAlignment="CENTER">
                      <font>
                         <Font name="System Bold" size="14.0" />
                      </font>
@@ -145,7 +146,22 @@
                         <Insets right="20.0" />
                      </HBox.margin>
                   </Label>
-                  <TextField fx:id="textCustomerId" prefHeight="25.0" prefWidth="130.0" style="-fx-background-color: E9F1F6; -fx-border-color: #2196f3; -fx-border-radius: 5; -fx-background-radius: 5;" />
+               </children>
+               <VBox.margin>
+                  <Insets bottom="-20.0" />
+               </VBox.margin>
+            </HBox>
+            <HBox prefHeight="25.0" prefWidth="1153.0">
+               <children>
+                  <Label text="Customer Id" textAlignment="CENTER">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="20.0" right="20.0" />
+                     </HBox.margin>
+                  </Label>
+                  <ComboBox fx:id="cmdCustomerId" onAction="#onActionCustomerId" prefWidth="130.0" style="-fx-background-color: white; -fx-border-color: #2196f3; -fx-background-radius: 5; -fx-border-radius: 5;" />
                   <Label text="Name" textAlignment="CENTER">
                      <font>
                         <Font name="System Bold" size="14.0" />
@@ -154,8 +170,11 @@
                         <Insets left="50.0" right="48.0" />
                      </HBox.margin>
                   </Label>
-                  <TextField fx:id="textName" prefHeight="25.0" prefWidth="150.0" style="-fx-background-color: E9F1F6; -fx-border-color: #2196f3; -fx-border-radius: 5; -fx-background-radius: 5;" />
+                  <Label fx:id="lblName" prefHeight="30.0" prefWidth="150.0" style="-fx-background-color: E9F1F6; -fx-border-color: #2196f3; -fx-border-radius: 5; -fx-background-radius: 5;" />
                </children>
+               <VBox.margin>
+                  <Insets bottom="10.0" />
+               </VBox.margin>
             </HBox>
             <HBox prefHeight="25.0" prefWidth="1153.0">
                <children>
@@ -164,10 +183,10 @@
                         <Font name="System Bold" size="14.0" />
                      </font>
                      <HBox.margin>
-                        <Insets right="45.0" />
+                        <Insets left="20.0" right="45.0" />
                      </HBox.margin>
                   </Label>
-                  <TextField fx:id="textOrderId" prefHeight="25.0" prefWidth="130.0" style="-fx-background-color: E9F1F6; -fx-border-color: #2196f3; -fx-border-radius: 5; -fx-background-radius: 5;" />
+                  <Label fx:id="lblOrderId" prefHeight="30.0" prefWidth="130.0" style="-fx-background-color: E9F1F6; -fx-border-color: #2196f3; -fx-border-radius: 5; -fx-background-radius: 5;" />
                   <Label text="Product Id" textAlignment="CENTER">
                      <font>
                         <Font name="System Bold" size="14.0" />
@@ -176,30 +195,57 @@
                         <Insets left="53.0" right="15.0" />
                      </HBox.margin>
                   </Label>
-                  <TextField fx:id="textProductId" prefHeight="25.0" prefWidth="150.0" style="-fx-background-color: E9F1F6; -fx-border-color: #2196f3; -fx-border-radius: 5; -fx-background-radius: 5;" />
+                  <ComboBox fx:id="cmdProductId" onAction="#onActionProductDetails" prefWidth="150.0" style="-fx-background-color: white; -fx-border-color: #2196f3; -fx-background-radius: 5; -fx-border-radius: 5;" />
                </children>
             </HBox>
             <HBox prefHeight="25.0" prefWidth="1153.0">
                <children>
-                  <Label text="Product Name" textAlignment="CENTER">
+                  <Label text="Product Details" textAlignment="CENTER">
                      <font>
                         <Font name="System Bold" size="14.0" />
                      </font>
                      <HBox.margin>
-                        <Insets right="5.0" />
+                        <Insets right="20.0" />
                      </HBox.margin>
                   </Label>
-                  <TextField fx:id="textProductName" prefHeight="25.0" prefWidth="130.0" style="-fx-background-color: E9F1F6; -fx-border-color: #2196f3; -fx-border-radius: 5; -fx-background-radius: 5;" />
+               </children>
+               <VBox.margin>
+                  <Insets bottom="-20.0" />
+               </VBox.margin>
+            </HBox>
+            <HBox prefHeight="25.0" prefWidth="1153.0">
+               <children>
+                  <Label text="Name" textAlignment="CENTER">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="20.0" right="5.0" />
+                     </HBox.margin>
+                  </Label>
+                  <Label fx:id="lblProductName" prefHeight="30.0" prefWidth="130.0" style="-fx-background-color: E9F1F6; -fx-border-color: #2196f3; -fx-border-radius: 5; -fx-background-radius: 5;" />
                   <Label text="Price" textAlignment="CENTER">
                      <font>
                         <Font name="System Bold" size="14.0" />
                      </font>
                      <HBox.margin>
-                        <Insets left="55.0" right="50.0" />
+                        <Insets left="30.0" right="10.0" />
                      </HBox.margin>
                   </Label>
-                  <TextField fx:id="textPrice" prefHeight="25.0" prefWidth="150.0" style="-fx-background-color: E9F1F6; -fx-border-color: #2196f3; -fx-border-radius: 5; -fx-background-radius: 5;" />
+                  <Label fx:id="lblPrice" prefHeight="30.0" prefWidth="80.0" style="-fx-background-color: E9F1F6; -fx-border-color: #2196f3; -fx-border-radius: 5; -fx-background-radius: 5;" />
+                  <Label text="QtyOnHand" textAlignment="CENTER">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="30.0" right="10.0" />
+                     </HBox.margin>
+                  </Label>
+                  <Label fx:id="lblQtyOnHand" prefHeight="30.0" prefWidth="70.0" style="-fx-background-color: E9F1F6; -fx-border-color: #2196f3; -fx-border-radius: 5; -fx-background-radius: 5;" />
                </children>
+               <VBox.margin>
+                  <Insets bottom="10.0" />
+               </VBox.margin>
             </HBox>
             <HBox prefHeight="25.0" prefWidth="1153.0">
                <children>
@@ -208,10 +254,10 @@
                         <Font name="System Bold" size="14.0" />
                      </font>
                      <HBox.margin>
-                        <Insets right="42.0" />
+                        <Insets left="20.0" right="42.0" />
                      </HBox.margin>
                   </Label>
-                  <TextField fx:id="textQty" prefHeight="25.0" prefWidth="130.0" style="-fx-background-color: E9F1F6; -fx-border-color: #2196f3; -fx-border-radius: 5; -fx-background-radius: 5;" />
+                  <TextField fx:id="textQty" prefHeight="30.0" prefWidth="130.0" style="-fx-background-color: E9F1F6; -fx-border-color: #2196f3; -fx-border-radius: 5; -fx-background-radius: 5;" />
                   <Label text="Pay" textAlignment="CENTER">
                      <font>
                         <Font name="System Bold" size="14.0" />
@@ -220,7 +266,7 @@
                         <Insets left="55.0" right="57.0" />
                      </HBox.margin>
                   </Label>
-                  <ChoiceBox fx:id="textPay" prefHeight="25.0" prefWidth="150.0" style="-fx-background-color: white; -fx-border-color: #2196f3; -fx-background-radius: 5; -fx-border-radius: 5;" />
+                  <ChoiceBox fx:id="cmdPay" prefHeight="30.0" prefWidth="150.0" style="-fx-background-color: white; -fx-border-color: #2196f3; -fx-background-radius: 5; -fx-border-radius: 5;" />
                </children>
             </HBox>
             <HBox alignment="CENTER_RIGHT" prefHeight="25.0" prefWidth="1153.0" spacing="20.0">

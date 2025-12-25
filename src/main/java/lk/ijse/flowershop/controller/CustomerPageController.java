@@ -4,10 +4,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import lk.ijse.flowershop.dto.CustomerDto;
 import lk.ijse.flowershop.model.CustomerModel;
@@ -50,7 +47,7 @@ public class CustomerPageController {
     private TextField textEmail;
 
     @FXML
-    private TextField textId;
+    private Label textId;
 
     @FXML
     private TextField textName;
@@ -60,8 +57,25 @@ public class CustomerPageController {
     @FXML
     public void initialize() {
         setCellValueFactory();
+        setGenerateId();
         loadAllCustomers();
         tableSelectListener();
+    }
+    private void setGenerateId() {
+        try {
+            String lastId = customerModel.getLastCustomerId();
+            int newId = 1;
+
+            if (lastId != null && lastId.startsWith("C")) {
+                newId = Integer.parseInt(lastId.substring(1)) + 1;
+            }
+
+            String formattedId = String.format("C%03d", newId);
+            textId.setText(formattedId);
+
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 
     private void setCellValueFactory() {
@@ -136,7 +150,7 @@ public class CustomerPageController {
         }
         try {
             CustomerDto dto = new CustomerDto(
-                    Integer.parseInt(textId.getText()),
+                    textId.getText(),
                     textName.getText(),
                     textEmail.getText(),
                     textContact.getText(),
@@ -165,7 +179,7 @@ public class CustomerPageController {
         }
         try {
             CustomerDto dto = new CustomerDto(
-                    Integer.parseInt(textId.getText()),
+                    textId.getText(),
                     textName.getText(),
                     textEmail.getText(),
                     textContact.getText(),
@@ -191,7 +205,7 @@ public class CustomerPageController {
     void onActionDelete(ActionEvent event) {
         try {
             CustomerDto dto = new CustomerDto();
-            dto.setCus_id(Integer.parseInt(textId.getText()));
+            dto.setCus_id(textId.getText());
 
             boolean isDeleted = customerModel.customerDelete(dto);
 
@@ -213,7 +227,7 @@ public class CustomerPageController {
     }
 
     private void clearFields() {
-        textId.clear();
+        setGenerateId();
         textName.clear();
         textEmail.clear();
         textContact.clear();

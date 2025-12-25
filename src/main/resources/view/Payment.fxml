@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="700.0" prefWidth="1209.0" style="-fx-background-color: #E9F1F6; -fx-background-radius: 10; -fx-border-color: purple; -fx-border-width: 3px; -fx-border-radius: 10;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.flowershop.controller.PaymentController">
+<AnchorPane prefHeight="700.0" prefWidth="1209.0" style="-fx-background-color: #E9F1F6; -fx-background-radius: 10; -fx-border-color: purple; -fx-border-width: 3px; -fx-border-radius: 10;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.flowershop.controller.PaymentController">
     <children>
         <ImageView fitHeight="550.0" fitWidth="1060.0" layoutX="10.0" layoutY="10.0" opacity="0.2" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <image>
@@ -37,7 +37,7 @@
                 </Label>
                 <HBox prefHeight="25.0" prefWidth="1153.0">
                     <children>
-                        <Label text="Employee Id" textAlignment="CENTER">
+                        <Label text="Payment Id" textAlignment="CENTER">
                             <font>
                                 <Font name="System Bold" size="14.0" />
                             </font>
@@ -148,11 +148,11 @@
             </children></VBox>
         <TableView fx:id="tblEmployee" prefHeight="200.0" prefWidth="200.0" style="-fx-border-color: purple; -fx-border-radius: 10; -fx-border-width: 2;" stylesheets="@../style/tableViewStyle.css" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0">
             <columns>
-                <TableColumn fx:id="colId" prefWidth="60.0" text="Employee Id" />
-                <TableColumn fx:id="colName" text="Employee Name" />
-                <TableColumn fx:id="colNic" prefWidth="75.0" text="Nic" />
-                <TableColumn fx:id="colEmail" text="Email" />
-                <TableColumn fx:id="colContact" prefWidth="75.0" text="Contact" />
+                <TableColumn fx:id="colPaymentId" prefWidth="60.0" text="Payment Id" />
+                <TableColumn fx:id="colOrderId" text="Order Id" />
+                <TableColumn fx:id="colNic" prefWidth="75.0" text="Pay Method" />
+                <TableColumn fx:id="colEmail" text="Subtotal" />
+                <TableColumn fx:id="colContact" prefWidth="75.0" text="Payment Date" />
                 <TableColumn fx:id="colAddress" prefWidth="75.0" text="Address" />
                 <TableColumn fx:id="colJobRole" prefWidth="70.0" text="Job Role" />
             </columns>

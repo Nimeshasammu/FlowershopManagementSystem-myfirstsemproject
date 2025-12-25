@@ -4,10 +4,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import lk.ijse.flowershop.dto.SupplierDto;
 import lk.ijse.flowershop.model.SupplierModel;
@@ -44,7 +41,7 @@ public class SupplierPageController {
     private TextField textEmail;
 
     @FXML
-    private TextField textId;
+    private Label textId;
 
     @FXML
     private TextField textName;
@@ -54,8 +51,25 @@ public class SupplierPageController {
     @FXML
     public void initialize() {
         setCellValueFactory();
+        setGenerateId();
         loadAllSuppliers();
         tableSelectListener();
+    }
+    private void setGenerateId() {
+        try {
+            String lastId = supplierModel.getLastSupplierId();
+            int newId = 1;
+
+            if (lastId != null && lastId.startsWith("S")) {
+                newId = Integer.parseInt(lastId.substring(1)) + 1;
+            }
+
+            String formattedId = String.format("S%03d", newId);
+            textId.setText(formattedId);
+
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 
     private void setCellValueFactory() {
@@ -129,7 +143,7 @@ public class SupplierPageController {
         }
         try {
             SupplierDto dto = new SupplierDto(
-                    Integer.parseInt(textId.getText()),
+                    textId.getText(),
                     textName.getText(),
                     textEmail.getText(),
                     textContact.getText(),
@@ -157,7 +171,7 @@ public class SupplierPageController {
         }
         try {
             SupplierDto dto = new SupplierDto(
-                    Integer.parseInt(textId.getText()),
+                    textId.getText(),
                     textName.getText(),
                     textEmail.getText(),
                     textContact.getText(),
@@ -182,7 +196,7 @@ public class SupplierPageController {
     void onActionDelete(ActionEvent event) {
         try {
             SupplierDto dto = new SupplierDto();
-            dto.setSupplier_id(Integer.parseInt(textId.getText()));
+            dto.setSupplier_id(textId.getText());
 
             boolean isDeleted = supplierModel.supplierDelete(dto);
 
@@ -204,7 +218,7 @@ public class SupplierPageController {
     }
 
     private void clearFields() {
-        textId.clear();
+        setGenerateId();
         textName.clear();
         textEmail.clear();
         textContact.clear();

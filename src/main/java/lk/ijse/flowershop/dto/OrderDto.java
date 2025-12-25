@@ -12,12 +12,12 @@ import lombok.*;
 @Setter
 @ToString
 public class OrderDto {
-    private int order_id;
+    private String order_id;
     private LocalDate order_date;
     private LocalTime time;
     private double total_amount;
-    private int cus_id;
-    private  int user_id;
+    private String cus_id;
+    private  String user_id;
     private ArrayList<OrderDetailsDto> cartList;
 
 }

@@ -11,10 +11,11 @@ public class EmployeeModel {
 
     public boolean employeeSave(EmployeeDto employeeDto) throws SQLException, ClassNotFoundException {
 
-        String sql = "INSERT INTO Employee(name, nic, job_role, email, contact_num, address) VALUES (?,?,?,?,?,?)";
+        String sql = "INSERT INTO Employee(emp_id,name, nic, job_role, email, contact_num, address) VALUES (?,?,?,?,?,?,?)";
 
         return CrudUtil.execute(
                 sql,
+                employeeDto.getEmp_id(),
                 employeeDto.getName(),
                 employeeDto.getNic(),
                 employeeDto.getJob_role(),
@@ -40,7 +41,7 @@ public class EmployeeModel {
         );
     }
 
-    public boolean employeeDelete(int empId) throws SQLException, ClassNotFoundException {
+    public boolean employeeDelete(String empId) throws SQLException, ClassNotFoundException {
 
         String sql = "DELETE FROM Employee WHERE emp_id=?";
 
@@ -56,7 +57,7 @@ public class EmployeeModel {
 
         while (rs.next()) {
             list.add(new EmployeeDto(
-                    rs.getInt("emp_id"),
+                    rs.getString("emp_id"),
                     rs.getString("name"),
                     rs.getString("nic"),
                     rs.getString("job_role"),
@@ -67,5 +68,12 @@ public class EmployeeModel {
         }
 
         return list;
+    }
+    public String getLastEmployeeId() throws SQLException, ClassNotFoundException {
+        ResultSet resultSet = CrudUtil.execute("SELECT MAX(emp_id) FROM Employee");
+        if (resultSet.next()) {
+            return resultSet.getString(1);
+        }
+        return null;
     }
 }

@@ -45,7 +45,7 @@
                         <Insets right="20.0" />
                      </HBox.margin>
                   </Label>
-                  <TextField fx:id="textId" prefHeight="25.0" prefWidth="249.0" promptText="ENTER YOUR ID" style="-fx-background-color: E9F1F6; -fx-border-color: #2196f3; -fx-border-radius: 5; -fx-background-radius: 5;" />
+                  <Label fx:id="textId" prefHeight="25.0" prefWidth="249.0"  style="-fx-background-color: E9F1F6; -fx-border-color: #2196f3; -fx-border-radius: 5; -fx-background-radius: 5;" />
                   <Label text="Name" textAlignment="CENTER">
                      <font>
                         <Font name="System Bold" size="14.0" />

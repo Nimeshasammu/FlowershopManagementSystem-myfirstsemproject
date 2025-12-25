@@ -5,15 +5,13 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import lk.ijse.flowershop.dto.EmployeeDto;
 import lk.ijse.flowershop.model.EmployeeModel;
 
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 public class EmployeePageController implements Initializable {
@@ -43,7 +41,7 @@ public class EmployeePageController implements Initializable {
     private TableColumn<EmployeeDto, String> colAddress;
 
     @FXML
-    private TextField textId;
+    private Label textId;
     @FXML
     private TextField textName;
     @FXML
@@ -62,10 +60,26 @@ public class EmployeePageController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         setCellValueFactory();
+        setGenerateId();
         loadAllEmployees();
         tableListener();
     }
+    private void setGenerateId() {
+        try {
+            String lastId = employeeModel.getLastEmployeeId();
+            int newId = 1;
 
+            if (lastId != null && lastId.startsWith("E")) {
+                newId = Integer.parseInt(lastId.substring(1)) + 1;
+            }
+
+            String formattedId = String.format("E%03d", newId);
+            textId.setText(formattedId);
+
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
     private void setCellValueFactory() {
         colId.setCellValueFactory(new PropertyValueFactory<>("emp_id"));
         colName.setCellValueFactory(new PropertyValueFactory<>("name"));
@@ -147,7 +161,7 @@ public class EmployeePageController implements Initializable {
         }
         try {
             EmployeeDto dto = new EmployeeDto(
-                    0,
+                    textId.getText(),
                     textName.getText(),
                     textNic.getText(),
                     textJobRole.getText(),
@@ -174,7 +188,7 @@ public class EmployeePageController implements Initializable {
         }
         try {
             EmployeeDto dto = new EmployeeDto(
-                    Integer.parseInt(textId.getText()),
+                    textId.getText(),
                     textName.getText(),
                     textNic.getText(),
                     textJobRole.getText(),
@@ -197,7 +211,7 @@ public class EmployeePageController implements Initializable {
     @FXML
     void onActionDelete(ActionEvent event) {
         try {
-            int empId = Integer.parseInt(textId.getText());
+            String empId = textId.getText();
             boolean isDeleted = employeeModel.employeeDelete(empId);
             if (isDeleted) {
                 new Alert(Alert.AlertType.INFORMATION, "Employee Deleted").show();
@@ -215,7 +229,7 @@ public class EmployeePageController implements Initializable {
     }
 
     private void clearFields() {
-        textId.clear();
+        setGenerateId();
         textName.clear();
         textNic.clear();
         textJobRole.clear();

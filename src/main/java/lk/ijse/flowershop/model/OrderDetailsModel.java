@@ -13,26 +13,26 @@ public class OrderDetailsModel {
     public boolean saveOrderDetails(OrderDetailsDto orderDetailsDto)
             throws SQLException, ClassNotFoundException {
 
-        String sql = "INSERT INTO Order_Details(order_id, item_id, quantity, payment_id) VALUES (?,?,?,?)";
+        String sql = "INSERT INTO Order_Details(order_id, item_id, quantity, unit_price) VALUES (?,?,?,?)";
 
         return CrudUtil.execute(
                 sql,
                 orderDetailsDto.getOrder_id(),
                 orderDetailsDto.getItem_id(),
                 orderDetailsDto.getQuantity(),
-                orderDetailsDto.getPayment_id()
+                orderDetailsDto.getUnit_price()
         );
     }
 
     public boolean updateOrderDetails(OrderDetailsDto orderDetailsDto)
             throws SQLException, ClassNotFoundException {
 
-        String sql = "UPDATE Order_Details SET quantity=?, payment_id=? WHERE order_id=? AND item_id=?";
+        String sql = "UPDATE Order_Details SET quantity=?, unit_price=? WHERE order_id=? AND item_id=?";
 
         return CrudUtil.execute(
                 sql,
                 orderDetailsDto.getQuantity(),
-                orderDetailsDto.getPayment_id(),
+                orderDetailsDto.getUnit_price(),
                 orderDetailsDto.getOrder_id(),
                 orderDetailsDto.getItem_id()
         );
@@ -54,10 +54,10 @@ public class OrderDetailsModel {
 
         while (resultSet.next()) {
             list.add(new OrderDetailsDto(
-                    resultSet.getInt("order_id"),
-                    resultSet.getInt("item_id"),
+                    resultSet.getString("order_id"),
+                    resultSet.getString("item_id"),
                     resultSet.getInt("quantity"),
-                    resultSet.getInt("payment_id")
+                    resultSet.getInt("unit_price")
             ));
         }
         return list;

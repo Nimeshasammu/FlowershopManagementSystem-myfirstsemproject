@@ -1,4 +1,5 @@
 package lk.ijse.flowershop.dto;
+
 import lombok.*;
 
 @AllArgsConstructor
@@ -7,7 +8,7 @@ import lombok.*;
 @Setter
 @ToString
 public class EmployeeDto {
-    private int emp_id;
+    private String emp_id;
     private String name;
     private String nic;
     private String job_role;

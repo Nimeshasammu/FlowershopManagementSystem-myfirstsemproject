@@ -29,7 +29,7 @@ public class CustomerModel {
         ResultSet resultSet = CrudUtil.execute("SELECT * FROM Customer");
         List<CustomerDto> customerDtoList = new ArrayList<>();
         while (resultSet.next()) {
-            customerDtoList.add(new CustomerDto( resultSet.getInt("cus_id"),
+            customerDtoList.add(new CustomerDto( resultSet.getString("cus_id"),
                     resultSet.getString("cus_name"),
                     resultSet.getString("email"),
                     resultSet.getString("contact_num"),
@@ -37,6 +37,23 @@ public class CustomerModel {
                     resultSet.getString("register_date")));
         }
         return customerDtoList;
+    }
+    public String getLastCustomerId() throws SQLException, ClassNotFoundException {
+        ResultSet resultSet = CrudUtil.execute("SELECT MAX(cus_id) FROM Customer");
+        if (resultSet.next()) {
+            return resultSet.getString(1);
+        }
+        return null;
+    }
+
+    public List<String> getAllCustomerIds() throws SQLException, ClassNotFoundException {
+        ResultSet resultSet = CrudUtil.execute("SELECT cus_id FROM Customer");
+        List<String> customerIds = new ArrayList<>();
+
+        while (resultSet.next()) {
+            customerIds.add(resultSet.getString("cus_id"));
+        }
+        return customerIds;
     }
 
 }

@@ -4,10 +4,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import lk.ijse.flowershop.dto.UserDto;
 import lk.ijse.flowershop.model.UserModel;
@@ -38,7 +35,7 @@ public class AdminManagePageController {
     private TableView<UserDto> tblUser;
 
     @FXML
-    private TextField textId;
+    private Label textId;
 
     @FXML
     private TextField textUsername;
@@ -60,9 +57,28 @@ public class AdminManagePageController {
     @FXML
     public void initialize() {
         setCellValueFactory();
+        setGenerateId();
         loadAllUsers();
         tableSelectListener();
     }
+
+    private void setGenerateId() {
+        try {
+            String lastId = userModel.getLastUserId();
+            int newId = 1;
+
+            if (lastId != null && lastId.startsWith("U")) {
+                newId = Integer.parseInt(lastId.substring(1)) + 1;
+            }
+
+            String formattedId = String.format("U%03d", newId);
+            textId.setText(formattedId);
+
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
 
     private void setCellValueFactory() {
         colId.setCellValueFactory(new PropertyValueFactory<>("user_id"));
@@ -131,12 +147,12 @@ public class AdminManagePageController {
         }
         try {
             UserDto dto = new UserDto(
-                    0, // auto increment
+                    textId.getText(),
                     textUsername.getText(),
                     textPassword.getText(),
                     textEmail.getText(),
                     textJobRole.getText(),
-                    Integer.parseInt(textEmployeeId.getText())
+                    textEmployeeId.getText()
             );
 
             boolean isSaved = userModel.userSave(dto);
@@ -161,12 +177,12 @@ public class AdminManagePageController {
         }
         try {
             UserDto dto = new UserDto(
-                    Integer.parseInt(textId.getText()),
+                    textId.getText(),
                     textUsername.getText(),
                     textPassword.getText(),
                     textEmail.getText(),
                     textJobRole.getText(),
-                    Integer.parseInt(textEmployeeId.getText())
+                    textEmployeeId.getText()
             );
 
             boolean isUpdated = userModel.userUpdate(dto);
@@ -187,7 +203,7 @@ public class AdminManagePageController {
     @FXML
     void onActionDelete(ActionEvent event) {
         try {
-            int userId = Integer.parseInt(textId.getText());
+            String userId = textId.getText();
 
             boolean isDeleted = userModel.userDelete(userId);
 
@@ -210,7 +226,7 @@ public class AdminManagePageController {
     }
 
     private void clearFields() {
-        textId.clear();
+        setGenerateId();
         textUsername.clear();
         textPassword.clear();
         textEmail.clear();

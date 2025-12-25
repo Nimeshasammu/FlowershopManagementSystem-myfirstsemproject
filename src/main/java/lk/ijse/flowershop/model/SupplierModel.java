@@ -21,7 +21,7 @@ public class SupplierModel {
     }
 
     public boolean supplierUpdate(SupplierDto supplierDto) throws SQLException, ClassNotFoundException {
-        String sql = "UPDATE Supplier SET name=?, email=?, contact_num=?, address=? WHERE supplier_id=?";
+        String sql = "UPDATE Supplier SET  name=?, email=?, contact_num=?, address=? WHERE supplier_id=?";
         return CrudUtil.execute(sql,
                 supplierDto.getName(),
                 supplierDto.getEmail(),
@@ -42,7 +42,7 @@ public class SupplierModel {
 
         while (resultSet.next()) {
             supplierDtoList.add(new SupplierDto(
-                    resultSet.getInt("supplier_id"),
+                    resultSet.getString("supplier_id"),
                     resultSet.getString("name"),
                     resultSet.getString("email"),
                     resultSet.getString("contact_num"),
@@ -50,5 +50,12 @@ public class SupplierModel {
             ));
         }
         return supplierDtoList;
+    }
+    public String getLastSupplierId() throws SQLException, ClassNotFoundException {
+        ResultSet resultSet = CrudUtil.execute("SELECT MAX(supplier_id) FROM Supplier");
+        if (resultSet.next()) {
+            return resultSet.getString(1);
+        }
+        return null;
     }
 }
