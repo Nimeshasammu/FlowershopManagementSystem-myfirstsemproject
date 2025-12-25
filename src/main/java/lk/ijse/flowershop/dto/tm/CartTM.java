@@ -12,5 +12,6 @@ public class CartTM {
     private String product;
     private int qty;
     private double price;
+
 }
 

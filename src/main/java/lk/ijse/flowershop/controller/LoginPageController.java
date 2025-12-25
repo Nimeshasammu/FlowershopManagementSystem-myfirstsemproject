@@ -19,6 +19,7 @@ import lk.ijse.flowershop.model.UserModel;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 public class LoginPageController implements Initializable {
@@ -45,7 +46,7 @@ public class LoginPageController implements Initializable {
 
     private boolean isPasswordVisible = false;
 
-
+   private static UserModel userModel = new UserModel();
     @FXML
     void PasswordVisibility(MouseEvent event) {
         if (isPasswordVisible) {
@@ -96,7 +97,7 @@ public class LoginPageController implements Initializable {
         }
     }
 
-    private void signIn() throws IOException {
+    private void signIn() throws IOException, SQLException, ClassNotFoundException {
         String userName = txtUserName.getText();
         String password;
         if (!isPasswordVisible) {
@@ -109,12 +110,10 @@ public class LoginPageController implements Initializable {
             showErrorWithTimeout();
             return;
         }
-        UserDto user = UserModel.searchUser(userName, password);
-
+        UserDto user = userModel.searchUser(userName, password);
 
         if (user != null) {
             Session.setCurrentUser(user);
-
             navigateTo("/view/UserView.fxml");
         } else {
             showErrorWithTimeout();
@@ -136,7 +135,7 @@ public class LoginPageController implements Initializable {
 
 
     @FXML
-    void onSignAction(ActionEvent event) throws IOException {
+    void onSignAction(ActionEvent event) throws IOException, SQLException, ClassNotFoundException {
         signIn();
     }
 

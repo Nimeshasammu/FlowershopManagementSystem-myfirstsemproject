@@ -13,7 +13,11 @@ public class OrderDetailsModel {
     public boolean saveOrderDetails(OrderDetailsDto orderDetailsDto)
             throws SQLException, ClassNotFoundException {
 
-        String sql = "INSERT INTO Order_Details(order_id, item_id, quantity, unit_price) VALUES (?,?,?,?)";
+        if (orderDetailsDto == null || orderDetailsDto.getQuantity() <= 0) {
+            return false;
+        }
+
+        String sql = "INSERT INTO Order_Details (order_id, item_id, quantity, unit_price) VALUES (?,?,?,?)";
 
         return CrudUtil.execute(
                 sql,
@@ -23,6 +27,7 @@ public class OrderDetailsModel {
                 orderDetailsDto.getUnit_price()
         );
     }
+
 
     public boolean updateOrderDetails(OrderDetailsDto orderDetailsDto)
             throws SQLException, ClassNotFoundException {

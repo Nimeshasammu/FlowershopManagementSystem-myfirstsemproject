@@ -9,8 +9,8 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
-import lk.ijse.flowershop.dto.CustomerDto;
-import lk.ijse.flowershop.dto.ItemDto;
+import javafx.stage.StageStyle;
+import lk.ijse.flowershop.dto.*;
 import lk.ijse.flowershop.dto.tm.CartTM;
 import lk.ijse.flowershop.model.CustomerModel;
 import lk.ijse.flowershop.model.ItemModel;
@@ -18,8 +18,9 @@ import lk.ijse.flowershop.model.OrderModel;
 
 import java.net.URL;
 import java.sql.SQLException;
-import java.util.List;
-import java.util.ResourceBundle;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.*;
 
 public class OrderPageController implements Initializable {
 
@@ -94,7 +95,7 @@ public class OrderPageController implements Initializable {
     private static CustomerModel customerModel = new CustomerModel();
     private static ItemModel itemModel = new ItemModel();
     private static OrderModel orderModel = new OrderModel();
-    private ObservableList<CartTM> cartList = FXCollections.observableArrayList();
+    private ObservableList<CartTM> productList = FXCollections.observableArrayList();
 
 
     @FXML
@@ -112,7 +113,7 @@ public class OrderPageController implements Initializable {
 
         try {
             ItemDto item = cmdProductId.getValue();
-            String productName = item.getItem_name();
+            String productId = item.getItem_id();
             int qty = Integer.parseInt(textQty.getText());
             double unitPrice = item.getUnit_price();
             double totalPrice = qty * unitPrice;
@@ -125,9 +126,8 @@ public class OrderPageController implements Initializable {
                 return;
             }
 
-            // check if already added
-            for (CartTM cart : cartList) {
-                if (cart.getProduct().equals(productName)) {
+            for (CartTM cart : productList) {
+                if (cart.getProduct().equals(productId)) {
                     cart.setQty(cart.getQty() + qty);
                     cart.setPrice(cart.getQty() * unitPrice);
                     tableProduct.refresh();
@@ -135,15 +135,15 @@ public class OrderPageController implements Initializable {
                 }
             }
             CartTM cartTM = new CartTM(
-                    productName,
+                    productId,
                     qty,
                     totalPrice
             );
 
-            cartList.add(cartTM);
-            tableProduct.setItems(cartList);
-            clearFields();
-
+            productList.add(cartTM);
+            tableProduct.setItems(productList);
+            updateSummary();
+            clearProductFields();
         } catch (NumberFormatException e) {
             showAlert(Alert.AlertType.ERROR, "Invalid quantity!");
         }
@@ -152,21 +152,106 @@ public class OrderPageController implements Initializable {
 
     @FXML
     void onActionClear(ActionEvent event) {
+        resetPage();
 
+    }
+    private void updateSummary() {
+        double subtotal = 0;
+        Set<String> uniqueItems = new HashSet<>();
+
+        for (CartTM tm : productList) {
+            subtotal += tm.getPrice();
+            uniqueItems.add(tm.getProduct());
+        }
+
+        itemsCountLabel.setText(String.valueOf(uniqueItems.size()));
+        subtotalLabel.setText(String.format("%.2f", subtotal));
+        discountLabel.setText("0.00");
+        totalLabel.setText(String.format("%.2f", subtotal));
     }
 
     @FXML
     void onActionConfirm(ActionEvent event) {
+        if (productList.isEmpty()) {
+            showAlert(Alert.AlertType.WARNING, "Cart is empty!");
+            return;
+        }
+        if (lblName.getText() == null || lblName.getText().isEmpty()) {
+            showAlert(Alert.AlertType.WARNING, "Please select a customer.");
+            return;
+        }
+        try {
+            String orderId = lblOrderId.getText();
+            LocalDate orderDate = LocalDate.now();
+            LocalTime orderTime = LocalTime.now();
 
+            double totalPrice = Double.parseDouble(
+                    totalLabel.getText().replace("Rs.", "").replace(",", "").trim()
+            );
+
+            String customerId = cmdCustomerId.getValue().getCus_id();
+            String userId = Session.getCurrentUser().getUser_id();
+
+            ArrayList<OrderDetailsDto> cartList = new ArrayList<>();
+            for (CartTM item : productList) {
+                cartList.add(new OrderDetailsDto(orderId, item.getProduct(), item.getQty(), item.getPrice()));
+            }
+            OrderDto orderDto = new OrderDto(orderId,orderDate,orderTime,totalPrice,customerId,userId,cartList);
+            boolean isPlaced = orderModel.placeOrder(orderDto);
+// ----
+            if (isPlaced) {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION, "Order Placed Successfully!");
+                alert.initStyle(StageStyle.UNDECORATED);
+                alert.getDialogPane().setStyle("-fx-border-color: blue; -fx-border-width: 2px;");
+                alert.show();
+                resetPage();
+                cmdCustomerId.getSelectionModel().clearSelection();
+                lblName.setText("");
+                setGenerateId();
+            } else {
+                showAlert(Alert.AlertType.ERROR, "Order payment failed.");
+            }
+        }catch (Exception e) {
+            e.printStackTrace();
+            showAlert(Alert.AlertType.ERROR, "Error placing order.");
+        }
     }
 
     @FXML
     void onKeyBalance(KeyEvent event) {
+        try {
+            double paid = txtPaid.getText().isEmpty() ? 0 : Double.parseDouble(txtPaid.getText());
+            double total = Double.parseDouble(totalLabel.getText());
+            lblBalance.setText(String.format("%.2f", paid - total));
+        } catch (NumberFormatException e) {
+            lblBalance.setText("0.00");
+        }
+    }
+    private void resetPage() {
+        productList.clear();
+        tableProduct.refresh();
 
+        itemsCountLabel.setText("0");
+        subtotalLabel.setText("0.00");
+        discountLabel.setText("0.00");
+        totalLabel.setText("0.00");
+        lblBalance.setText("");
+
+        txtPaid.clear();
+        clearProductFields();
+    }
+
+    private void clearProductFields() {
+        cmdProductId.getSelectionModel().clearSelection();
+        lblProductName.setText("");
+        lblPrice.setText("");
+        lblQtyOnHand.setText("");
+        textQty.setText("");
     }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        resetPage();
         loadCustomers();
         loadItems();
         cmdPay.setItems(FXCollections.observableArrayList("Cash", "Card", "Check"));
@@ -205,13 +290,6 @@ public class OrderPageController implements Initializable {
         alert.showAndWait();
     }
 
-    private void clearFields() {
-        cmdProductId.getSelectionModel().clearSelection();
-        lblProductName.setText("");
-        lblPrice.setText("");
-        lblQtyOnHand.setText("");
-        textQty.setText("");
-    }
 
     public void onActionCustomerId(ActionEvent actionEvent) {
         setGenerateId();

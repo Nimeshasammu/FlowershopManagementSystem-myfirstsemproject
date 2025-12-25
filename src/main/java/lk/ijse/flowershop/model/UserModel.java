@@ -11,31 +11,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class UserModel {
-    public static UserDto searchUser(String userName, String password) {
-        String sql = "SELECT * FROM User WHERE user_name = ? AND password = ?";
-
-        try {
-            Connection connection = DBConnection.getInstance().getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setString(1, userName);
-            preparedStatement.setString(2, password);
-
-            ResultSet resultSet = preparedStatement.executeQuery();
-
-            if (resultSet.next()) {
-                return new UserDto(
-                        resultSet.getString("user_name"),
-                        resultSet.getString("password"),
-                        resultSet.getString("email"),
-                        resultSet.getString("role")
-                );
-            }
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
+   
     public boolean userSave(UserDto userDto) throws SQLException, ClassNotFoundException {
 
         String sql = "INSERT INTO User(user_id,user_name, password, email, role, emp_id) VALUES (?,?,?,?,?,?)";
@@ -117,6 +93,26 @@ public class UserModel {
 
         if (resultSet.next()) {
             return resultSet.getString(1);
+        }
+        return null;
+    }
+
+    public UserDto searchUser(String userName, String password)
+            throws SQLException, ClassNotFoundException {
+
+        String sql = "SELECT * FROM User WHERE user_name=? AND password=?";
+
+        ResultSet rs = CrudUtil.execute(sql, userName, password);
+
+        if (rs.next()) {
+            return new UserDto(
+                    rs.getString("user_id"),
+                    rs.getString("user_name"),
+                    rs.getString("password"),
+                    rs.getString("email"),
+                    rs.getString("role"),
+                    rs.getString("emp_id")
+            );
         }
         return null;
     }

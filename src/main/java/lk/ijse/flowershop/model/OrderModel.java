@@ -19,6 +19,7 @@ public class OrderModel {
     private final ItemModel itemModel = new ItemModel();
     private final PaymentModel paymentModel = new PaymentModel();
 
+
     public boolean orderSave(OrderDto orderDto) throws SQLException, ClassNotFoundException {
 
         String sql = "INSERT INTO Orders(order_id,order_date,time,total_amount,cus_id,user_id) VALUES (?,?,?,?,?,?)";
@@ -34,69 +35,54 @@ public class OrderModel {
         );
     }
 
-//    // ================= PLACE ORDER =================
-//    public boolean placeOrder(OrderDto orderDto)
-//            throws SQLException, ClassNotFoundException {
-//
-//        Connection connection = DBConnection.getInstance().getConnection();
-//
-//        try {
-//            connection.setAutoCommit(false);
-//
-//            int orderId = saveOrder(orderDto);
-//            if (orderId == -1) {
-//                connection.rollback();
-//                return false;
-//            }
-//
-//            // Save Order Details + Update Stock
-//            for (OrderDetailsDto detail : orderDto.getCartList()) {
-//
-//                detail.setOrder_id(orderId);
-//
-//                boolean isDetailSaved = orderDetailsModel.saveOrderDetails(detail);
-//                if (!isDetailSaved) {
-//                    connection.rollback();
-//                    return false;
-//                }
-//
-//                boolean isStockUpdated =
-//                        itemModel.stockUpdate(detail.getItem_id(), detail.getQuantity());
-//
-//                if (!isStockUpdated) {
-//                    connection.rollback();
-//                    return false;
-//                }
-//            }
-//
-//            // Save Payment
-//            PaymentDto paymentDto = new PaymentDto(
-//                    0,
-//                    "Cash",
-//                    orderDto.getOrder_date().atStartOfDay(),
-//                    orderDto.getTotal_amount(),
-//                    "SUCCESS",
-//                    orderId
-//            );
-//
-//            boolean isPaymentSaved = paymentModel.paymentSave(paymentDto);
-//            if (!isPaymentSaved) {
-//                connection.rollback();
-//                return false;
-//            }
-//
-//            connection.commit();
-//            return true;
-//
-//        } catch (SQLException e) {
-//            connection.rollback();
-//            e.printStackTrace();
-//            return false;
-//
-//        } finally {
-//            connection.setAutoCommit(true);
-//        }
-//    }
+    // ================= PLACE ORDER =================
+    public boolean placeOrder(OrderDto orderDto)
+            throws SQLException, ClassNotFoundException {
+
+        Connection connection = DBConnection.getInstance().getConnection();
+
+        try {
+            connection.setAutoCommit(false);
+
+            boolean isOrderSaved = orderSave(orderDto);
+            if (!isOrderSaved) {
+                connection.rollback();
+                return false;
+            }
+
+            for (OrderDetailsDto detail : orderDto.getCartList()) {
+
+                // ✅ IMPORTANT: set order_id
+                detail.setOrder_id(orderDto.getOrder_id());
+
+                boolean isDetailSaved = orderDetailsModel.saveOrderDetails(detail);
+                if (!isDetailSaved) {
+                    connection.rollback();
+                    return false;
+                }
+
+                boolean isStockUpdated =
+                        itemModel.stockUpdate(detail.getItem_id(), detail.getQuantity());
+
+                if (!isStockUpdated) {
+                    connection.rollback();
+                    return false;
+                }
+            }
+
+            connection.commit();
+            return true;
+
+        } catch (SQLException e) {
+            connection.rollback();
+            e.printStackTrace();
+            return false;
+
+        } finally {
+            connection.setAutoCommit(true);
+        }
+    }
+
 
     // ================= GET ALL ORDERS =================
   /*  public List<OrderDto> getAllOrders()
