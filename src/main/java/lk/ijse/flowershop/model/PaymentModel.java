@@ -10,12 +10,14 @@ import java.util.List;
 
 public class PaymentModel {
 
-    public boolean paymentSave(PaymentDto paymentDto) throws SQLException, ClassNotFoundException {
-        String sql = "INSERT INTO Payment(payment_id, payment_method, payment_date, total_amount, status, order_id) " +
-                "VALUES (?,?,?,?,?,?)";
+    public boolean paymentSave(PaymentDto paymentDto)
+            throws SQLException, ClassNotFoundException {
+
+        String sql = "INSERT INTO Payment(payment_method, payment_date, total_amount, status, order_id) " +
+                "VALUES (?,?,?,?,?)";
+
         return CrudUtil.execute(
                 sql,
-                paymentDto.getPayment_id(),
                 paymentDto.getPayment_method(),
                 paymentDto.getPayment_date(),
                 paymentDto.getTotal_amount(),
@@ -23,6 +25,7 @@ public class PaymentModel {
                 paymentDto.getOrder_id()
         );
     }
+
 
     public boolean paymentUpdate(PaymentDto paymentDto) throws SQLException, ClassNotFoundException {
         String sql = "UPDATE Payment SET payment_method=?, payment_date=?, total_amount=?, status=?, order_id=? " +
@@ -50,7 +53,7 @@ public class PaymentModel {
         while (resultSet.next()) {
             paymentDtoList.add(
                     new PaymentDto(
-                            resultSet.getString("payment_id"),
+                            resultSet.getInt("payment_id"),
                             resultSet.getString("payment_method"),
                             resultSet.getTimestamp("payment_date").toLocalDateTime(),
                             resultSet.getDouble("total_amount"),

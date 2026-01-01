@@ -147,6 +147,11 @@
                                 <Image url="@../images/payment.png" />
                             </image>
                         </ImageView>
+                  <Button fx:id="btnReport" layoutX="11.0" layoutY="363.0" onAction="#onReport" prefHeight="25.0" prefWidth="180.0" style="-fx-background-color: #ffd3ef; -fx-border-color: purple; -fx-border-radius: 10px; -fx-background-radius: 10;" text="    REPORT" textFill="PURPLE">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </Button>
                     </children>
                 </Pane>
             </children>

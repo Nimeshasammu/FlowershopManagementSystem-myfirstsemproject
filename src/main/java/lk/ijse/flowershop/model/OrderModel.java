@@ -36,7 +36,7 @@ public class OrderModel {
     }
 
     // ================= PLACE ORDER =================
-    public boolean placeOrder(OrderDto orderDto)
+    public boolean placeOrder(OrderDto orderDto,PaymentDto paymentDto)
             throws SQLException, ClassNotFoundException {
 
         Connection connection = DBConnection.getInstance().getConnection();
@@ -52,7 +52,6 @@ public class OrderModel {
 
             for (OrderDetailsDto detail : orderDto.getCartList()) {
 
-                // ✅ IMPORTANT: set order_id
                 detail.setOrder_id(orderDto.getOrder_id());
 
                 boolean isDetailSaved = orderDetailsModel.saveOrderDetails(detail);
@@ -69,7 +68,11 @@ public class OrderModel {
                     return false;
                 }
             }
-
+            boolean isPaymentSaved = paymentModel.paymentSave(paymentDto);
+            if (!isPaymentSaved) {
+                connection.rollback();
+                return false;
+            }
             connection.commit();
             return true;
 

@@ -5,6 +5,7 @@ module lk.ijse.flowershop {
     requires static lombok;
     requires java.desktop;
     requires java.sql;
+    requires net.sf.jasperreports.core;
 
 
     opens lk.ijse.flowershop.controller to javafx.fxml;

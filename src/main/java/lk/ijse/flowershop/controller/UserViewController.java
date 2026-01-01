@@ -10,13 +10,22 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.StageStyle;
+import lk.ijse.flowershop.db.DBConnection;
 import lk.ijse.flowershop.dto.Session;
 import lk.ijse.flowershop.dto.UserDto;
 import lk.ijse.flowershop.util.DateTimeUtil;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.view.JasperViewer;
 
 import java.net.URL;
+import java.sql.Connection;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 public class UserViewController implements Initializable {
@@ -96,7 +105,9 @@ public class UserViewController implements Initializable {
 
     @FXML
     void onBooking(ActionEvent event) {
-
+        resetOtherPages();
+//        changePage1(btnAdminManage, "/images/admin.png", pngAdminManage);
+        navigateTo("/view/Payment.fxml");
     }
 
     @FXML
@@ -253,6 +264,31 @@ public class UserViewController implements Initializable {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MMM/yyyy");
         lblDate.setText(currentDate.format(formatter));
         DateTimeUtil.updateRealTime(lblTime);
+
+    }
+
+    public void onReport(ActionEvent actionEvent) {
+        try {
+            JasperReport jasperReport = JasperCompileManager.compileReport(
+                    getClass().getResourceAsStream("/report/CustomerReport.jrxml")
+            );
+
+            Connection connection = DBConnection.getInstance().getConnection();
+
+            Map<String, Object> parameters = new HashMap<>();
+            parameters.put("p_date", LocalDate.now().toString());
+
+            JasperPrint jasperPrint = JasperFillManager.fillReport(
+                    jasperReport,
+                    parameters, // null
+                    connection
+            );
+
+            JasperViewer.viewReport(jasperPrint, false);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
     }
 }

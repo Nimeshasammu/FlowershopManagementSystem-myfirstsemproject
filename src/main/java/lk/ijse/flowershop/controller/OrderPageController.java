@@ -15,14 +15,17 @@ import lk.ijse.flowershop.dto.tm.CartTM;
 import lk.ijse.flowershop.model.CustomerModel;
 import lk.ijse.flowershop.model.ItemModel;
 import lk.ijse.flowershop.model.OrderModel;
+import lk.ijse.flowershop.model.PaymentModel;
 
 import java.net.URL;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.*;
 
 public class OrderPageController implements Initializable {
+
 
     @FXML
     private AnchorPane AdminManageAnchorPane;
@@ -95,6 +98,7 @@ public class OrderPageController implements Initializable {
     private static CustomerModel customerModel = new CustomerModel();
     private static ItemModel itemModel = new ItemModel();
     private static OrderModel orderModel = new OrderModel();
+    private static PaymentModel paymentModel = new PaymentModel();
     private ObservableList<CartTM> productList = FXCollections.observableArrayList();
 
 
@@ -170,6 +174,7 @@ public class OrderPageController implements Initializable {
         totalLabel.setText(String.format("%.2f", subtotal));
     }
 
+
     @FXML
     void onActionConfirm(ActionEvent event) {
         if (productList.isEmpty()) {
@@ -197,7 +202,12 @@ public class OrderPageController implements Initializable {
                 cartList.add(new OrderDetailsDto(orderId, item.getProduct(), item.getQty(), item.getPrice()));
             }
             OrderDto orderDto = new OrderDto(orderId,orderDate,orderTime,totalPrice,customerId,userId,cartList);
-            boolean isPlaced = orderModel.placeOrder(orderDto);
+
+            String paymentMethod = cmdPay.getValue();
+            LocalDateTime paymentDate = LocalDateTime.now();
+            String status = "Success";
+            PaymentDto paymentDto = new PaymentDto(paymentMethod,paymentDate,totalPrice,status,orderId);
+            boolean isPlaced = orderModel.placeOrder(orderDto,paymentDto);
 // ----
             if (isPlaced) {
                 Alert alert = new Alert(Alert.AlertType.INFORMATION, "Order Placed Successfully!");
