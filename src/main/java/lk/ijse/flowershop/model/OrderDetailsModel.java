@@ -5,6 +5,7 @@ import lk.ijse.flowershop.util.CrudUtil;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -67,4 +68,22 @@ public class OrderDetailsModel {
         }
         return list;
     }
+
+    public double todaySale() throws SQLException, ClassNotFoundException {
+        String sql = """
+        SELECT SUM(od.quantity * od.unit_price) AS total_sales
+        FROM Order_Details od
+        JOIN Orders o ON od.order_id = o.order_id
+        WHERE o.order_date = ?
+    """;
+
+        ResultSet rs = CrudUtil.execute(sql, java.sql.Date.valueOf(LocalDate.now()));
+
+        if (rs.next()) {
+            return rs.getDouble("total_sales");
+        }
+        return 0.0;
+    }
+
+
 }

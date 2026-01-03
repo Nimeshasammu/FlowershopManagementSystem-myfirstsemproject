@@ -13,5 +13,6 @@ public class PaymentController {
     }
 
     public void onActionClear(ActionEvent actionEvent) {
+
     }
 }

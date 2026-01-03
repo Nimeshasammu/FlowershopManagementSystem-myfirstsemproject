@@ -4,11 +4,15 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import lk.ijse.flowershop.dto.*;
 import lk.ijse.flowershop.dto.tm.CartTM;
@@ -189,6 +193,7 @@ public class OrderPageController implements Initializable {
             String orderId = lblOrderId.getText();
             LocalDate orderDate = LocalDate.now();
             LocalTime orderTime = LocalTime.now();
+            int itemsCount = Integer.parseInt(itemsCountLabel.getText());
 
             double totalPrice = Double.parseDouble(
                     totalLabel.getText().replace("Rs.", "").replace(",", "").trim()
@@ -207,6 +212,21 @@ public class OrderPageController implements Initializable {
             LocalDateTime paymentDate = LocalDateTime.now();
             String status = "Success";
             PaymentDto paymentDto = new PaymentDto(paymentMethod,paymentDate,totalPrice,status,orderId);
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/BillPage.fxml"));
+            Parent rootNode = loader.load();
+
+            BillPageController controller = loader.getController();
+            controller.setlabel(orderDto, paymentDto,itemsCount);
+
+            Stage stage = new Stage();
+            stage.initStyle(StageStyle.UNDECORATED);
+            stage.setScene(new Scene(rootNode));
+            stage.showAndWait();
+            if (!controller.isSave()) {
+                showAlert(Alert.AlertType.ERROR, "Order payment canceled.");
+                resetPage();
+                return;
+            }
             boolean isPlaced = orderModel.placeOrder(orderDto,paymentDto);
 // ----
             if (isPlaced) {

@@ -46,6 +46,18 @@ public class CustomerModel {
         return null;
     }
 
+    public String getCustomerNameById(String cusId)
+            throws SQLException, ClassNotFoundException {
+
+        String sql = "SELECT cus_name FROM Customer WHERE cus_id = ?";
+        ResultSet resultSet = CrudUtil.execute(sql, cusId);
+
+        if (resultSet.next()) {
+            return resultSet.getString("cus_name");
+        }
+        return null; // customer not found
+    }
+
     public List<String> getAllCustomerIds() throws SQLException, ClassNotFoundException {
         ResultSet resultSet = CrudUtil.execute("SELECT cus_id FROM Customer");
         List<String> customerIds = new ArrayList<>();

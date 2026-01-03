@@ -66,4 +66,16 @@ public class ItemModel {
         }
         return null;
     }
+
+    public int currentStock() throws SQLException, ClassNotFoundException {
+        String sql = "SELECT COALESCE(SUM(quantity), 0) AS total FROM Item";
+        ResultSet rs = CrudUtil.execute(sql);
+
+        if (rs.next()) {
+            return rs.getInt("total");
+        }
+        return 0;
+    }
+
+
 }
