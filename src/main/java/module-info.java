@@ -6,6 +6,7 @@ module lk.ijse.flowershop {
     requires java.desktop;
     requires java.sql;
     requires net.sf.jasperreports.core;
+    requires javafx.graphics;
 
 
     opens lk.ijse.flowershop.controller to javafx.fxml;

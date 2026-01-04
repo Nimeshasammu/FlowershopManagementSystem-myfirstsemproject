@@ -1,6 +1,7 @@
 package lk.ijse.flowershop.model;
 
 import lk.ijse.flowershop.dto.PaymentDto;
+import lk.ijse.flowershop.dto.tm.PaymentTM;
 import lk.ijse.flowershop.util.CrudUtil;
 
 import java.sql.ResultSet;
@@ -46,29 +47,43 @@ public class PaymentModel {
         return CrudUtil.execute(sql, paymentDto.getPayment_id());
     }
 
-    public List<PaymentDto> getAllPayments() throws SQLException, ClassNotFoundException {
-        ResultSet resultSet = CrudUtil.execute("SELECT * FROM Payment");
-        List<PaymentDto> paymentDtoList = new ArrayList<>();
 
-        while (resultSet.next()) {
-            paymentDtoList.add(
-                    new PaymentDto(
-                            resultSet.getInt("payment_id"),
-                            resultSet.getString("payment_method"),
-                            resultSet.getTimestamp("payment_date").toLocalDateTime(),
-                            resultSet.getDouble("total_amount"),
-                            resultSet.getString("status"),
-                            resultSet.getString("order_id")
-                    )
-            );
-        }
-        return paymentDtoList;
-    }
     public String getLastPaymentId() throws SQLException, ClassNotFoundException {
         ResultSet resultSet = CrudUtil.execute("SELECT MAX(payment_id) FROM Payment");
         if (resultSet.next()) {
             return resultSet.getString("payment_id");
         }
         return null;
+    }
+    public List<PaymentTM> getAllPayments() throws SQLException, ClassNotFoundException {
+
+        String sql = """
+            SELECT p.payment_id,
+                   p.order_id,
+                   p.payment_method,
+                   p.total_amount,
+                   p.payment_date,
+                   o.cus_id,
+                   p.status
+            FROM Payment p
+            JOIN Orders o ON p.order_id = o.order_id
+        """;
+
+        ResultSet rst = CrudUtil.execute(sql);
+
+        List<PaymentTM> list = new ArrayList<>();
+
+        while (rst.next()) {
+            list.add(new PaymentTM(
+                    String.valueOf(rst.getInt("payment_id")),
+                    rst.getString("order_id"),
+                    rst.getString("payment_method"),
+                    rst.getDouble("total_amount"),
+                    rst.getTimestamp("payment_date").toLocalDateTime(),
+                    rst.getString("cus_id"),
+                    rst.getString("status")
+            ));
+        }
+        return list;
     }
 }

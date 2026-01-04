@@ -5,12 +5,16 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import lk.ijse.flowershop.dto.ItemDto;
 import lk.ijse.flowershop.dto.MyListener;
 import lk.ijse.flowershop.model.ItemModel;
@@ -66,8 +70,20 @@ public class ProductController implements Initializable {
 
         if (!fruits.isEmpty()) {
             setChosenFruit(fruits.get(0));
-
             myListener = item -> setChosenFruit(item);
+        }
+
+        loadItems();
+    }
+
+    private void loadItems() {
+        grid.getChildren().clear();
+        fruits.clear();
+
+        try {
+            fruits.addAll(itemModel.getAllItems());
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
         }
 
         int column = 0;
@@ -96,7 +112,22 @@ public class ProductController implements Initializable {
         }
     }
 
-    public void onActionAddFlower(ActionEvent actionEvent) {
 
+    public void onActionAddFlower(ActionEvent actionEvent) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/AddFlower.fxml"));
+        Parent rootNode = loader.load();
+
+        Stage stage = new Stage();
+        stage.initStyle(StageStyle.UNDECORATED);
+        stage.setScene(new Scene(rootNode));
+
+        // Make it modal
+        stage.initModality(javafx.stage.Modality.APPLICATION_MODAL);
+
+        stage.showAndWait(); // WAIT until window is closed
+
+        // Refresh page
+        loadItems();
     }
+
 }

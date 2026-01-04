@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
@@ -10,31 +10,49 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="rootNode" prefHeight="400.0" prefWidth="321.0" style="-fx-background-color: WHITE; -fx-border-color: #023c73; -fx-border-width: 5;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.lankaice.project.controller.AddAdminController">
+<AnchorPane fx:id="rootNode" prefHeight="450.0" prefWidth="340.0" style="-fx-background-color: linear-gradient(to bottom right, #f5f9ff, #e6f0ff);" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.flowershop.controller.AddFlowerController">
+
     <children>
-        <Button fx:id="btnAdminFormBtn" layoutX="61.0" layoutY="309.0" mnemonicParsing="false" onAction="#btnSaveOnAction" prefHeight="25.0" prefWidth="199.0" style="-fx-background-color: #023c73;" text="SAVE" textFill="WHITE">
-            <font>
-                <Font name="System Bold" size="11.0" />
-            </font>
-        </Button>
-      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="97.0" layoutY="36.0" prefHeight="28.0" prefWidth="128.0" text="ADD ADMIN" textFill="#023c73">
-         <font>
-            <Font name="System Bold" size="19.0" />
-         </font>
-      </Label>
-      <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="269.0" layoutY="20.0" onMouseClicked="#close" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../images/close.png" />
-         </image>
-      </ImageView>
-      <VBox layoutX="10.0" layoutY="64.0" prefHeight="223.0" prefWidth="275.0" spacing="15.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="70.0">
-         <children>
-              <TextField fx:id="txtUsername" prefHeight="25.0" prefWidth="199.0" promptText="UserName" style="-fx-background-color: white; -fx-border-color: blue; -fx-border-radius: 5;" />
-              <TextField fx:id="txtPassword" prefHeight="25.0" prefWidth="199.0" promptText="Password" style="-fx-background-color: white; -fx-border-color: blue; -fx-border-radius: 5;" />
-            <TextField fx:id="txtName" prefHeight="10.0" prefWidth="311.0" promptText="Name" style="-fx-background-color: white; -fx-border-color: blue; -fx-border-radius: 5;" />
-              <TextField fx:id="txtEmail" prefHeight="25.0" prefWidth="199.0" promptText="Email" style="-fx-background-color: white; -fx-border-color: blue; -fx-border-radius: 5;" />
-            <ChoiceBox fx:id="txtRole" prefHeight="26.0" prefWidth="285.0" style="-fx-background-color: White; -fx-border-color: blue; -fx-border-radius: 5;" />
-         </children>
-      </VBox>
+
+        <!-- Card -->
+        <AnchorPane layoutX="20" layoutY="20" prefHeight="410" prefWidth="300" style="-fx-background-color: white;                            -fx-background-radius: 20;                            -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 15, 0, 0, 5);">
+
+            <!-- Close Button -->
+            <ImageView fitHeight="22" fitWidth="22" layoutX="265" layoutY="15" onMouseClicked="#close" preserveRatio="true">
+                <image>
+                    <Image url="@../images/close.png" />
+                </image>
+            </ImageView>
+
+            <!-- Title -->
+            <Label layoutX="85" layoutY="20" text="ADD FLOWER" textFill="#023c73">
+                <font>
+                    <Font name="System Bold" size="20" />
+                </font>
+            </Label>
+
+            <!-- Form -->
+            <VBox alignment="TOP_CENTER" layoutX="30" layoutY="60.0" prefWidth="240" spacing="14">
+                <Label fx:id="txtId" prefHeight="35.0" prefWidth="253.0" style="-fx-background-radius: 10;                                   -fx-border-radius: 10;                                   -fx-border-color: #023c73;                                   -fx-padding: 8;" />
+
+                <TextField fx:id="txtName" promptText="🌸 Item Name" style="-fx-background-radius: 10;                                   -fx-border-radius: 10;                                   -fx-border-color: #023c73;                                   -fx-padding: 8;" />
+
+                <TextField fx:id="txtUnitPrice" promptText="💰 Unit Price" style="-fx-background-radius: 10;                                   -fx-border-radius: 10;                                   -fx-border-color: #023c73;                                   -fx-padding: 8;" />
+
+                <TextField fx:id="txtImgSrc" promptText="🖼 Image Path" style="-fx-background-radius: 10;                                   -fx-border-radius: 10;                                   -fx-border-color: #023c73;                                   -fx-padding: 8;" />
+
+                <TextField fx:id="txtItemColor" promptText="🎨 Flower Color" style="-fx-background-radius: 10;                                   -fx-border-radius: 10;                                   -fx-border-color: #023c73;                                   -fx-padding: 8;" />
+
+                <TextField fx:id="txtQuantity" promptText="📦 Quantity" style="-fx-background-radius: 10;                                   -fx-border-radius: 10;                                   -fx-border-color: #023c73;                                   -fx-padding: 8;" />
+
+                <!-- Save Button -->
+                <Button fx:id="btnAdminFormBtn" onAction="#btnSaveOnAction" prefHeight="38" style="-fx-background-color: linear-gradient(to right, #023c73, #045aa6); -fx-background-radius: 7; -fx-text-fill: white; -fx-font-weight: bold; -fx-cursor: hand;" text="SAVE FLOWER">
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin></Button>
+
+            </VBox>
+        </AnchorPane>
+
     </children>
 </AnchorPane>

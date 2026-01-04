@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="AdminManageAnchorPane" prefHeight="700.0" prefWidth="1209.0" style="-fx-background-color: #E9F1F6; -fx-background-radius: 10; -fx-border-color: purple; -fx-border-width: 3px; -fx-border-radius: 10;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.flowershop.controller.ReportPageController">
+    <children>
+        <ImageView fitHeight="550.0" fitWidth="1060.0" layoutX="10.0" layoutY="10.0" opacity="0.2" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <image>
+                <Image url="@../images/main-blog-1.jpg" />
+            </image>
+        </ImageView>
+        <ImageView fitHeight="550.0" fitWidth="1060.0" opacity="0.2" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <image>
+                <Image url="@../images/main-blog-1.jpg" />
+            </image>
+        </ImageView>
+        <VBox alignment="CENTER_LEFT" layoutX="570.0" layoutY="10.0" prefHeight="575.0" prefWidth="206.0" spacing="25.0">
+            <children>
+                <Button fx:id="btnCustomerReport" mnemonicParsing="false" onAction="#CustomerReportOnAction" prefHeight="25.0" prefWidth="200.0" style="-fx-background-color: #341f97;" text="Customer Report" textFill="WHITE">
+                    <font>
+                        <Font name="System Bold" size="14.0" />
+                    </font>
+                </Button>
+                <Button fx:id="btnItemReport" mnemonicParsing="false" onAction="#btnItemReportOnAction" prefHeight="25.0" prefWidth="200.0" style="-fx-background-color: #341f97;" text="Item Report" textFill="WHITE">
+                    <font>
+                        <Font name="System Bold" size="14.0" />
+                    </font>
+                </Button>
+                <Button fx:id="btnOrderReport" mnemonicParsing="false" onAction="#btnOrderReportOnAction" prefHeight="25.0" prefWidth="200.0" style="-fx-background-color: #341f97;" text="Order Report" textFill="WHITE">
+                    <font>
+                        <Font name="System Bold" size="14.0" />
+                    </font>
+                </Button>
+                <Button fx:id="btnSupplierReport" mnemonicParsing="false" onAction="#btnSupplierReportOnAction" prefHeight="25.0" prefWidth="200.0" style="-fx-background-color: #341f97;" text="Supplier Report" textFill="WHITE">
+                    <font>
+                        <Font name="System Bold" size="14.0" />
+                    </font>
+                </Button>
+                <Button fx:id="btnInventoryReport" mnemonicParsing="false" onAction="#btnInventoryReportOnAction" prefHeight="25.0" prefWidth="200.0" style="-fx-background-color: #341f97;" text="Inventory Report" textFill="WHITE">
+                    <font>
+                        <Font name="System Bold" size="14.0" />
+                    </font>
+                </Button>
+                <Button fx:id="btnEmployeeReport" mnemonicParsing="false" onAction="#btnEmployeeReportOnAction" prefHeight="25.0" prefWidth="200.0" style="-fx-background-color: #341f97;" text="Employee Report" textFill="WHITE">
+                    <font>
+                        <Font name="System Bold" size="14.0" />
+                    </font>
+                </Button>
+                <Button fx:id="btnAttendanceReport" mnemonicParsing="false" onAction="#btnAttendanceReportOnAction" prefHeight="25.0" prefWidth="200.0" style="-fx-background-color: #341f97;" text="Attendance Report" textFill="WHITE">
+                    <font>
+                        <Font name="System Bold" size="14.0" />
+                    </font>
+                </Button>
+                <Button fx:id="btnSalaryReport" mnemonicParsing="false" onAction="#btnSalaryReportOnAction" prefHeight="25.0" prefWidth="200.0" style="-fx-background-color: #341f97;" text="Salary Report" textFill="WHITE">
+                    <font>
+                        <Font name="System Bold" size="14.0" />
+                    </font>
+                </Button>
+                <Button fx:id="btnSalesReport" mnemonicParsing="false" onAction="#btnSalesReportOnAction" prefHeight="25.0" prefWidth="200.0" style="-fx-background-color: #341f97;" text="Sales Report" textFill="WHITE">
+                    <font>
+                        <Font name="System Bold" size="14.0" />
+                    </font>
+                </Button>
+            </children>
+        </VBox>
+        <ImageView fitHeight="362.0" fitWidth="507.0" layoutX="59.0" layoutY="155.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@../images/reportIllust.png" />
+            </image>
+        </ImageView>
+      <Label layoutX="73.0" layoutY="46.0" text="View Report" textFill="#023c73">
+         <font>
+            <Font name="Corbel Bold" size="35.0" />
+         </font>
+      </Label>
+    </children>
+</AnchorPane>

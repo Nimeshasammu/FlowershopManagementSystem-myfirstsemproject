@@ -117,4 +117,21 @@ public class UserModel {
         return null;
     }
 
+    public UserDto searchUser1(String userName, String email) throws SQLException, ClassNotFoundException {
+        String sql = "SELECT * FROM User WHERE user_name=? AND email=?";
+
+        ResultSet rs = CrudUtil.execute(sql, userName, email);
+
+        if (rs.next()) {
+            return new UserDto(
+                    rs.getString("user_id"),
+                    rs.getString("user_name"),
+                    rs.getString("password"),
+                    rs.getString("email"),
+                    rs.getString("role"),
+                    rs.getString("emp_id")
+            );
+        }
+        return null;
+    }
 }

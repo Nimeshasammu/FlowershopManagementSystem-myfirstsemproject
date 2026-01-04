@@ -10,285 +10,199 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.StageStyle;
-import lk.ijse.flowershop.db.DBConnection;
 import lk.ijse.flowershop.dto.Session;
 import lk.ijse.flowershop.dto.UserDto;
 import lk.ijse.flowershop.util.DateTimeUtil;
-import net.sf.jasperreports.engine.JasperCompileManager;
-import net.sf.jasperreports.engine.JasperFillManager;
-import net.sf.jasperreports.engine.JasperPrint;
-import net.sf.jasperreports.engine.JasperReport;
-import net.sf.jasperreports.view.JasperViewer;
 
+import java.io.InputStream;
 import java.net.URL;
-import java.sql.Connection;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.ResourceBundle;
 
 public class UserViewController implements Initializable {
 
-    @FXML
-    private AnchorPane ancMainContainer;
+    @FXML private AnchorPane ancMainContainer;
+    @FXML private Button btnDashboard, btnAllFlowers, btnOrders, btnPayment,
+            btnCustomer, btnEmployee, btnSupplier, btnAdminManage,
+            btnReport, btnLogout;
 
-    @FXML
-    private AnchorPane ancUserView;
+    @FXML private Label lblDate, lblTime;
 
-    @FXML
-    private Button btnAdminManage;
+    @FXML private ImageView pngDashboard, pngAllFlowers, pngOrder, pngPayment,
+            pngCustomer, pngEmployee, pngSupplier,
+            pngAdminManage, pngReport, pngLogout;
 
-    @FXML
-    private Button btnBooking;
-
-    @FXML
-    private Button btnCourse;
-
-    @FXML
-    private Button btnDashboard;
-
-    @FXML
-    private Button btnInstructor;
-
-    @FXML
-    private Button btnLogout;
-
-    @FXML
-    private Button btnPayment;
-
-    @FXML
-    private Button btnRegister;
-
-    @FXML
-    private Button btnStudent;
-
-    @FXML
-    private Label lblDate;
-
-    @FXML
-    private Label lblTime;
-
-    @FXML
-    private ImageView pngAdminManage;
-
-    @FXML
-    private ImageView pngBooking;
-
-    @FXML
-    private ImageView pngCourse;
-
-    @FXML
-    private ImageView pngDashboard;
-
-    @FXML
-    private ImageView pngInstructor;
-
-    @FXML
-    private ImageView pngLogout;
-
-    @FXML
-    private ImageView pngPayment;
-
-    @FXML
-    private ImageView pngRegister;
-
-    @FXML
-    private ImageView pngStudent;
-
-    @FXML
-    void onAdminManage(ActionEvent event) {
-        resetOtherPages();
-//        changePage1(btnAdminManage, "/images/admin.png", pngAdminManage);
-        navigateTo("/view/VerifySuperAdmin.fxml");
-    }
-
-    @FXML
-    void onBooking(ActionEvent event) {
-        resetOtherPages();
-//        changePage1(btnAdminManage, "/images/admin.png", pngAdminManage);
-        navigateTo("/view/Payment.fxml");
-    }
-
-    @FXML
-    void onCourse(ActionEvent event) {
-        resetOtherPages();
-//        changePage1(btnDashboard, "/images/dashboard.png", pngDashboard);
-        navigateTo("/view/SupplierPage.fxml");
-    }
+    // ================= BUTTON ACTIONS =================
 
     @FXML
     void onDashboard(ActionEvent event) {
         resetOtherPages();
-//        changePage1(btnDashboard, "/images/dashboard.png", pngDashboard);
+        changePage1(btnDashboard, "/images/dashboard(1).png", pngDashboard);
         navigateTo("/view/DashboardPage.fxml");
     }
 
     @FXML
-    void onInstructor(ActionEvent event) {
+    void onAllFlowers(ActionEvent event) {
         resetOtherPages();
-//        changePage1(btnDashboard, "/images/dashboard.png", pngDashboard);
+        changePage1(btnAllFlowers, "/images/flower(1).png", pngAllFlowers);
+        navigateTo("/view/ProductPage.fxml");
+    }
+
+    @FXML
+    void onOrders(ActionEvent event) {
+        resetOtherPages();
+        changePage1(btnOrders, "/images/order(1).png", pngOrder);
+        navigateTo("/view/OrderPage.fxml");
+    }
+
+    @FXML
+    void onPayment(ActionEvent event) {
+        resetOtherPages();
+        changePage1(btnPayment, "/images/payment(1).png", pngPayment);
+        navigateTo("/view/Payment.fxml");
+    }
+
+    @FXML
+    void onCustomer(ActionEvent event) {
+        resetOtherPages();
+        changePage1(btnCustomer, "/images/customer(1).png", pngCustomer);
+        navigateTo("/view/CustomerPage.fxml");
+    }
+
+    @FXML
+    void onEmployee(ActionEvent event) {
+        resetOtherPages();
+        changePage1(btnEmployee, "/images/employee(1).png", pngEmployee);
         navigateTo("/view/EmployeePage.fxml");
     }
 
     @FXML
-    void onLoginUser(MouseEvent event) {
+    void onSupplier(ActionEvent event) {
+        resetOtherPages();
+        changePage1(btnSupplier, "/images/supplier(1).png", pngSupplier);
+        navigateTo("/view/SupplierPage.fxml");
+    }
 
+    @FXML
+    void onAdminManage(ActionEvent event) {
+        resetOtherPages();
+        changePage1(btnAdminManage, "/images/admin(1).png", pngAdminManage);
+        navigateTo("/view/VerifySuperAdmin.fxml");
+    }
+
+    @FXML
+    void onReport(ActionEvent event) {
+        resetOtherPages();
+        changePage1(btnReport, "/images/report(1).png", pngReport);
+        navigateTo("/view/ReportPage.fxml");
     }
 
     @FXML
     void onLogout(ActionEvent event) {
-        resetOtherPages();
-//        changePage1(btnDashboard, "/images/logout.png", pngDashboard);
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to logout?", ButtonType.YES, ButtonType.NO);
-
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION,
+                "Are you sure you want to logout?", ButtonType.YES, ButtonType.NO);
         alert.initStyle(StageStyle.UNDECORATED);
-
-        DialogPane dialogPane = alert.getDialogPane();
-        dialogPane.setStyle("-fx-border-color: red; -fx-border-width: 2px;");
 
         alert.showAndWait().ifPresent(response -> {
             if (response == ButtonType.YES) {
-                // Clear the session
                 Session.setCurrentUser(null);
-
                 try {
-                    // Load the login page
-                    AnchorPane loginPane = FXMLLoader.load(getClass().getResource("/view/LoginPage.fxml"));
-                    ancMainContainer.getScene().setRoot(loginPane);
+                    AnchorPane pane = FXMLLoader.load(getClass().getResource("/view/LoginPage.fxml"));
+                    ancMainContainer.getScene().setRoot(pane);
                 } catch (Exception e) {
-                    new Alert(Alert.AlertType.ERROR, "Failed to load login page", ButtonType.OK).show();
                     e.printStackTrace();
                 }
             }
         });
     }
 
-    @FXML
-    void onPayment(ActionEvent event) {
-        resetOtherPages();
-//        changePage1(btnDashboard, "/images/dashboard.png", pngDashboard);
-        navigateTo("/view/CustomerPage.fxml");
-    }
+    // ================= NAVIGATION =================
 
-    @FXML
-    void onRegistration(ActionEvent event) {
-        resetOtherPages();
-//        changePage1(btnAdminManage, "/images/admin.png", pngAdminManage);
-        navigateTo("/view/ProductPage.fxml");
-    }
-
-    @FXML
-    void onStudent(ActionEvent event) {
-        resetOtherPages();
-//        changePage1(btnAdminManage, "/images/admin.png", pngAdminManage);
-        navigateTo("/view/OrderPage.fxml");
-    }
-
-    public void navigateTo(String path) {
+    private void navigateTo(String path) {
         try {
             ancMainContainer.getChildren().clear();
-            AnchorPane anchorPane = FXMLLoader.load(getClass().getResource(path));
-            anchorPane.prefWidthProperty().bind(ancMainContainer.widthProperty());
-            anchorPane.prefHeightProperty().bind(ancMainContainer.heightProperty());
-            ancMainContainer.getChildren().add(anchorPane);
+            AnchorPane pane = FXMLLoader.load(getClass().getResource(path));
+            pane.prefWidthProperty().bind(ancMainContainer.widthProperty());
+            pane.prefHeightProperty().bind(ancMainContainer.heightProperty());
+            ancMainContainer.getChildren().add(pane);
         } catch (Exception e) {
-            new Alert(Alert.AlertType.ERROR, "Page not found", ButtonType.OK).show();
             e.printStackTrace();
         }
     }
 
-
-    private void resetOtherPages() {
-        resetButtonStyle(btnDashboard);
-        resetButtonStyle(btnRegister);
-        resetButtonStyle(btnStudent);
-        resetButtonStyle(btnCourse);
-        resetButtonStyle(btnBooking);
-        resetButtonStyle(btnPayment);
-        resetButtonStyle(btnInstructor);
-        resetButtonStyle(btnAdminManage);
-        resetButtonStyle(btnLogout);
-
-//        changePage("/images/dashboard(1).png", pngDashboard);
-//        changePage("/images/registration(1).png", pngRegister);
-//        changePage("/images/students(1).png", pngStudent);
-//        changePage("/images/course(1).png", pngCourse);
-//        changePage("/images/booking(1).png", pngBooking);
-//        changePage("/images/payment(1).png", pngPayment);
-//        changePage("/images/report(1).png", pngInstructor);
-//        changePage("/images/admin(1).png", pngAdminManage);
-//        changePage("/images/logout(1).png", pngLogout);
-
-    }
-
-    private void resetButtonStyle(Button button) {
-        button.setStyle("-fx-text-fill: #800080; -fx-background-color:  #ffd3ef; -fx-border-color: #800080; -fx-border-radius: 10px; -fx-background-radius: 10;");
-    }
-
-    private void setActiveButtonStyle(Button button) {
-        button.setStyle("-fx-text-fill: white; -fx-background-color: #800080; -fx-border-color: #800080; -fx-border-radius: 10px; -fx-background-radius: 10;");
-    }
+    // ================= IMAGE FIX METHODS =================
 
     private void changePage(String imagePath, ImageView imageView) {
-        imageView.setImage(new Image(imagePath));
+        InputStream stream = getClass().getResourceAsStream(imagePath);
+        if (stream != null) {
+            imageView.setImage(new Image(stream));
+        } else {
+            System.out.println("Image not found: " + imagePath);
+        }
     }
 
     private void changePage1(Button button, String imagePath, ImageView imageView) {
-        imageView.setImage(new Image(imagePath));
+        changePage(imagePath, imageView);
         setActiveButtonStyle(button);
     }
 
+    // ================= STYLES =================
+
+    private void resetOtherPages() {
+        resetButtonStyle(btnDashboard);
+        resetButtonStyle(btnAllFlowers);
+        resetButtonStyle(btnOrders);
+        resetButtonStyle(btnPayment);
+        resetButtonStyle(btnCustomer);
+        resetButtonStyle(btnEmployee);
+        resetButtonStyle(btnSupplier);
+        resetButtonStyle(btnAdminManage);
+        resetButtonStyle(btnReport);
+        resetButtonStyle(btnLogout);
+
+        changePage("/images/dashboard.jpeg", pngDashboard);
+        changePage("/images/flower.png", pngAllFlowers);
+        changePage("/images/order.png", pngOrder);
+        changePage("/images/payment.png", pngPayment);
+        changePage("/images/customer.png", pngCustomer);
+        changePage("/images/employee.png", pngEmployee);
+        changePage("/images/supplier.png", pngSupplier);
+        changePage("/images/admin.png", pngAdminManage);
+        changePage("/images/report.jpeg", pngReport);
+        changePage("/images/logout.jpeg", pngLogout);
+    }
+
+    private void resetButtonStyle(Button button) {
+        button.setStyle("-fx-text-fill:#800080; -fx-background-color:#ffd3ef; -fx-border-color:#800080;");
+    }
+
+    private void setActiveButtonStyle(Button button) {
+        button.setStyle("-fx-text-fill:white; -fx-background-color:#800080;");
+    }
+
+    // ================= INITIALIZE =================
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
         navigateTo("/view/DashboardPage.fxml");
+
         UserDto user = Session.getCurrentUser();
-        String role = user.getRole();
-
-        switch (role) {
-            case "Admin":
-                break;
-            case "Manager":
-                btnAdminManage.setDisable(true);
-                break;
-            case "Receptionist":
-                btnBooking.setDisable(true);
-                btnPayment.setDisable(true);
-                btnCourse.setDisable(true);
-                btnInstructor.setDisable(true);
-                btnAdminManage.setDisable(true);
-                break;
+        if (user != null) {
+            switch (user.getRole()) {
+                case "Manager" -> btnAdminManage.setDisable(true);
+                case "Receptionist" -> {
+                    btnPayment.setDisable(true);
+                    btnAdminManage.setDisable(true);
+                }
+            }
         }
 
-        LocalDate currentDate = LocalDate.now();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MMM/yyyy");
-        lblDate.setText(currentDate.format(formatter));
+        lblDate.setText(LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MMM/yyyy")));
         DateTimeUtil.updateRealTime(lblTime);
-
     }
 
-    public void onReport(ActionEvent actionEvent) {
-        try {
-            JasperReport jasperReport = JasperCompileManager.compileReport(
-                    getClass().getResourceAsStream("/report/CustomerReport.jrxml")
-            );
-
-            Connection connection = DBConnection.getInstance().getConnection();
-
-            Map<String, Object> parameters = new HashMap<>();
-            parameters.put("p_date", LocalDate.now().toString());
-
-            JasperPrint jasperPrint = JasperFillManager.fillReport(
-                    jasperReport,
-                    parameters, // null
-                    connection
-            );
-
-            JasperViewer.viewReport(jasperPrint, false);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-    }
+    @FXML
+    void onLoginUser(MouseEvent event) {}
 }
