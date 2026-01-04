@@ -4,11 +4,19 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
+import lk.ijse.flowershop.db.DBConnection;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.view.JasperViewer;
+
+import java.sql.Connection;
+import java.time.LocalDate;
+import java.util.HashMap;
+import java.util.Map;
 
 public class ReportPageController {
-
-    @FXML
-    private AnchorPane AdminManageAnchorPane;
 
     @FXML
     private Button btnAttendanceReport;
@@ -39,6 +47,28 @@ public class ReportPageController {
 
     @FXML
     void CustomerReportOnAction(ActionEvent event) {
+        try {
+            JasperReport jasperReport = JasperCompileManager.compileReport(
+                    getClass().getResourceAsStream("/report/CustomerReport.jrxml")
+            );
+
+            Connection connection = DBConnection.getInstance().getConnection();
+
+            Map<String, Object> parameters = new HashMap<>();
+            parameters.put("p_date", LocalDate.now().toString());
+
+            JasperPrint jasperPrint = JasperFillManager.fillReport(
+                    jasperReport,
+                    parameters, // null
+                    connection
+            );
+
+            JasperViewer.viewReport(jasperPrint, false);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
 
     }
 
@@ -49,6 +79,28 @@ public class ReportPageController {
 
     @FXML
     void btnEmployeeReportOnAction(ActionEvent event) {
+        try {
+            JasperReport jasperReport = JasperCompileManager.compileReport(
+                    getClass().getResourceAsStream("/report/EmployeeReport.jrxml")
+            );
+
+            Connection connection = DBConnection.getInstance().getConnection();
+
+            Map<String, Object> parameters = new HashMap<>();
+            parameters.put("p_date", LocalDate.now().toString());
+
+            JasperPrint jasperPrint = JasperFillManager.fillReport(
+                    jasperReport,
+                    parameters, // null
+                    connection
+            );
+
+            JasperViewer.viewReport(jasperPrint, false);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
 
     }
 
@@ -64,6 +116,28 @@ public class ReportPageController {
 
     @FXML
     void btnOrderReportOnAction(ActionEvent event) {
+        try {
+            JasperReport jasperReport = JasperCompileManager.compileReport(
+                    getClass().getResourceAsStream("/report/Payment.jrxml")
+            );
+
+            Connection connection = DBConnection.getInstance().getConnection();
+
+            Map<String, Object> parameters = new HashMap<>();
+            // parameters.put("p_date", LocalDate.now().toString());
+
+            JasperPrint jasperPrint = JasperFillManager.fillReport(
+                    jasperReport,
+                    parameters, // null
+                    connection
+            );
+
+            JasperViewer.viewReport(jasperPrint, false);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
 
     }
 
@@ -79,6 +153,27 @@ public class ReportPageController {
 
     @FXML
     void btnSupplierReportOnAction(ActionEvent event) {
+        try {
+            JasperReport jasperReport = JasperCompileManager.compileReport(
+                    getClass().getResourceAsStream("/report/SalesReport.jrxml")
+            );
+
+            Connection connection = DBConnection.getInstance().getConnection();
+
+            Map<String, Object> parameters = new HashMap<>();
+            parameters.put("p_date", LocalDate.now().toString());
+
+            JasperPrint jasperPrint = JasperFillManager.fillReport(
+                    jasperReport,
+                    parameters, // null
+                    connection
+            );
+
+            JasperViewer.viewReport(jasperPrint, false);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
     }
 

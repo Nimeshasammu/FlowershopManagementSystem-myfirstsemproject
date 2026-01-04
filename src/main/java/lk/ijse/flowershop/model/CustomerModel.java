@@ -21,7 +21,8 @@ public class CustomerModel {
     }
 
     public boolean customerDelete(CustomerDto customerDto) throws SQLException, ClassNotFoundException {
-        String sql = "DELETE FROM Customer WHERE cus_id=?";
+        String sql = "DEL" +
+                "ETE FROM Customer WHERE cus_id=?";
         return CrudUtil.execute(sql, customerDto.getCus_id());
     }
 

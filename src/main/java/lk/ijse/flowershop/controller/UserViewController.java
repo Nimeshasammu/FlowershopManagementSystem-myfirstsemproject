@@ -137,8 +137,6 @@ public class UserViewController implements Initializable {
         InputStream stream = getClass().getResourceAsStream(imagePath);
         if (stream != null) {
             imageView.setImage(new Image(stream));
-        } else {
-            System.out.println("Image not found: " + imagePath);
         }
     }
 
